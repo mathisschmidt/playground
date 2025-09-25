@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Guide to RAG Systems</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: The application is designed as a single-page educational journey, guiding a software engineer from high-level concepts to implementation details. The structure is thematic and progressive: 1. "What & Why" for foundational understanding. 2. A core "Interactive RAG Pipeline" to deconstruct the complex process into a clickable, step-by-step visual flow, which is the most effective way to teach a multi-stage technical architecture. 3. A "Conceptual Implementation" section with code examples to provide a practical anchor. 4. "Benefits & Use Cases" to summarize the value proposition. This user flow is chosen to build knowledge layer by layer, prioritizing interactive exploration over a static document structure, which is more engaging and effective for a technical learner. -->
+    <!-- Visualization & Content Choices: The key information is the RAG process itself. Report Info: RAG Architecture -> Goal: Explain a complex, multi-step process -> Viz/Presentation Method: An interactive, JS-controlled flowchart made with HTML/CSS. Interaction: User clicks through stages, each click highlights a component and updates a descriptive text panel. Justification: This transforms passive reading into active learning, making the abstract flow of data and logic tangible and easier to grasp. For comparison (RAG vs. LLM), a static HTML/CSS diagram is used for its clarity and immediacy. Code is presented in styled blocks for readability. This approach avoids static images or complex libraries, focusing on lightweight, effective DOM manipulation to achieve the educational goals. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        .step-item {
+            transition: all 0.3s ease-in-out;
+        }
+        .step-item.active {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            border-color: #2563eb;
+        }
+        .step-connector {
+            transition: all 0.3s ease-in-out;
+        }
+        .step-connector.active {
+            color: #2563eb;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+<div class="container mx-auto px-4 py-8 md:py-12">
+
+    <header class="text-center mb-12 md:mb-16">
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-2">A Software Engineer's Guide to RAG</h1>
+        <p class="text-lg md:text-xl text-slate-600">An interactive exploration of Retrieval-Augmented Generation.</p>
+    </header>
+
+    <nav class="sticky top-0 z-10 bg-stone-50/80 backdrop-blur-md border-b border-stone-200 mb-12">
+        <div class="max-w-5xl mx-auto flex justify-center items-center space-x-4 sm:space-x-8 py-3">
+            <a href="#what-is-rag" class="text-sm sm:text-base text-slate-600 hover:text-blue-600 font-medium transition-colors">What & Why</a>
+            <a href="#how-it-works" class="text-sm sm:text-base text-slate-600 hover:text-blue-600 font-medium transition-colors">How It Works</a>
+            <a href="#implementation" class="text-sm sm:text-base text-slate-600 hover:text-blue-600 font-medium transition-colors">Implementation</a>
+            <a href="#benefits" class="text-sm sm:text-base text-slate-600 hover:text-blue-600 font-medium transition-colors">Benefits</a>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto">
+
+        <!-- Section: What is RAG -->
+        <section id="what-is-rag" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-6 text-center">What is RAG and Why Do We Need It?</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="text-xl font-semibold text-slate-800 mb-3 text-center">Standard LLM</h3>
+                    <div class="flex flex-col items-center p-4 space-y-4">
+                        <div class="bg-slate-100 p-3 rounded-lg w-full text-center">👤 User Query</div>
+                        <div class="text-2xl text-slate-400">⬇️</div>
+                        <div class="bg-blue-100 border border-blue-200 text-blue-800 p-3 rounded-lg w-full text-center">🧠 LLM</div>
+                        <div class="text-2xl text-slate-400">⬇️</div>
+                        <div class="bg-slate-100 p-3 rounded-lg w-full text-center">💬 Answer (from parametric memory)</div>
+                    </div>
+                    <p class="mt-4 text-sm text-slate-600">A standard Large Language Model answers based solely on its pre-trained knowledge. This can lead to hallucinations or outdated information, as its memory is static and limited to its training data.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg border-2 border-blue-500">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-3 text-center">RAG-Powered LLM</h3>
+                    <div class="flex flex-col items-center p-4 space-y-4">
+                        <div class="bg-slate-100 p-3 rounded-lg w-full text-center">👤 User Query</div>
+                        <div class="text-2xl text-slate-400">⬇️</div>
+                        <div class="bg-emerald-100 border border-emerald-200 text-emerald-800 p-3 rounded-lg w-full text-center">📚 Retriever (searches external data)</div>
+                        <div class="text-2xl text-slate-400">⬇️</div>
+                        <div class="bg-blue-100 border border-blue-200 text-blue-800 p-3 rounded-lg w-full text-center">🧠 LLM + Context</div>
+                        <div class="text-2xl text-slate-400">⬇️</div>
+                        <div class="bg-slate-100 p-3 rounded-lg w-full text-center">✅ Grounded Answer (with sources)</div>
+                    </div>
+                    <p class="mt-4 text-sm text-slate-600">Retrieval-Augmented Generation enhances an LLM by first retrieving relevant information from an external, up-to-date knowledge base. This context is then provided to the LLM along with the user's query, resulting in more accurate, timely, and verifiable answers.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: How it works -->
+        <section id="how-it-works" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4 text-center">The Interactive RAG Pipeline</h2>
+            <p class="text-center text-slate-600 mb-8">Click through the steps to see how a RAG system processes data and responds to queries.</p>
+
+            <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                <div id="rag-explanation" class="mb-8 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-lg min-h-[100px]">
+                    <h3 id="step-title" class="font-bold text-lg text-blue-900">Let's Get Started!</h3>
+                    <p id="step-description" class="text-blue-800 mt-1">Select a step below to learn more about it. We'll start with the offline "Indexing Pipeline" where we prepare our knowledge base.</p>
+                </div>
+
+                <div id="interactive-diagram" class="space-y-4">
+                    <!-- Indexing Pipeline -->
+                    <div class="p-4 border border-amber-300 bg-amber-50 rounded-lg">
+                        <h4 class="font-semibold text-amber-800 mb-4 text-center">Offline: Indexing Pipeline</h4>
+                        <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+                            <div id="step-0" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">📄<br>Load Data</div>
+                            <div class="step-connector text-2xl text-stone-400 transform md:-rotate-0 rotate-90">&rarr;</div>
+                            <div id="step-1" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">🧩<br>Chunk</div>
+                            <div class="step-connector text-2xl text-stone-400 transform md:-rotate-0 rotate-90">&rarr;</div>
+                            <div id="step-2" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">🔢<br>Embed</div>
+                            <div class="step-connector text-2xl text-stone-400 transform md:-rotate-0 rotate-90">&rarr;</div>
+                            <div id="step-3" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">🗄️<br>Store in Vector DB</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center text-3xl text-stone-400 my-4">↕️</div>
+
+                    <!-- Inference Pipeline -->
+                    <div class="p-4 border border-sky-300 bg-sky-50 rounded-lg">
+                        <h4 class="font-semibold text-sky-800 mb-4 text-center">Online: Inference Pipeline</h4>
+                        <div class="flex flex-col md:flex-row items-center justify-center flex-wrap gap-2 md:gap-4">
+                            <div id="step-4" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">👤<br>User Query</div>
+                            <div class="step-connector text-2xl text-stone-400 transform md:-rotate-0 rotate-90">&rarr;</div>
+                            <div id="step-5" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">🔢<br>Embed Query</div>
+                            <div class="step-connector text-2xl text-stone-400 transform md:-rotate-0 rotate-90">&rarr;</div>
+                            <div id="step-6" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">🔍<br>Search & Retrieve</div>
+                            <div class="step-connector text-2xl text-stone-400 transform md:-rotate-0 rotate-90">&rarr;</div>
+                            <div id="step-7" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">📝<br>Augment Prompt</div>
+                            <div class="step-connector text-2xl text-stone-400 transform md:-rotate-0 rotate-90">&rarr;</div>
+                            <div id="step-8" class="step-item p-3 bg-white border-2 border-stone-300 rounded-lg cursor-pointer w-full md:w-auto text-center">🧠<br>Generate</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 flex justify-center space-x-4">
+                    <button id="prev-step" class="px-6 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
+                    <button id="next-step" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50">Next</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Implementation -->
+        <section id="implementation" class="mb-16 scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4 text-center">Conceptual Implementation</h2>
+            <p class="text-center text-slate-600 mb-8">This Python example shows a simplified RAG flow using popular libraries.</p>
+            <div class="bg-gray-800 text-white p-4 rounded-lg shadow-lg">
+                    <pre class="whitespace-pre-wrap text-sm"><code class="language-python">
+# Step 1: Install necessary libraries
+# pip install langchain openai chromadb tiktoken
+
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import CharacterTextSplitter
+from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.chains import RetrievalQA
+from langchain.llms import OpenAI
+
+# -- INDEXING PIPELINE --
+
+# 1. Load Data: Load your source documents
+loader = TextLoader('./my_knowledge.txt')
+documents = loader.load()
+
+# 2. Chunk: Split documents into smaller, manageable chunks
+text_splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=0)
+docs = text_splitter.split_documents(documents)
+
+# 3. Embed & 4. Store: Convert chunks to vectors and store them
+# This process uses an embedding model and sets up a local vector database
+embeddings = OpenAIEmbeddings()
+vector_db = Chroma.from_documents(docs, embeddings, collection_name="knowledge_base")
+
+
+# -- INFERENCE PIPELINE --
+
+# 5, 6, 7, 8: Setup the complete RAG chain
+# This object encapsulates the retriever and the LLM
+qa_chain = RetrievalQA.from_chain_type(
+    llm=OpenAI(),
+    chain_type="stuff",
+    retriever=vector_db.as_retriever() # This handles query embedding, search, and retrieval
+)
+
+# Ask a question!
+query = "What is the main topic of my document?"
+response = qa_chain.run(query)
+
+print(response)
+
+                    </code></pre>
+            </div>
+        </section>
+
+        <!-- Section: Benefits -->
+        <section id="benefits" class="scroll-mt-24">
+            <h2 class="text-3xl font-bold text-slate-900 mb-8 text-center">Key Benefits & Use Cases</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="font-semibold text-lg mb-2">✅ Improved Accuracy</h3>
+                    <p class="text-slate-600">Reduces hallucinations by grounding the LLM with factual, relevant information.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="font-semibold text-lg mb-2">⏱️ Always Up-to-Date</h3>
+                    <p class="text-slate-600">Answers are based on the latest data in your knowledge base, not stale training data.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="font-semibold text-lg mb-2">🔗 Verifiable & Trustworthy</h3>
+                    <p class="text-slate-600">Systems can cite the sources used for generation, allowing users to verify the information.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="font-semibold text-lg mb-2">🤖 Customer Support Bots</h3>
+                    <p class="text-slate-600">Answer user questions based on the latest product manuals and knowledge base articles.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="font-semibold text-lg mb-2">🔎 Internal Knowledge Search</h3>
+                    <p class="text-slate-600">Enable employees to ask natural language questions about internal company documents.</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm border border-stone-200">
+                    <h3 class="font-semibold text-lg mb-2">💡 Content Generation</h3>
+                    <p class="text-slate-600">Create summaries or answer questions about complex research papers or financial reports.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center mt-16 text-slate-500">
+        <p>&copy; 2024 Interactive Guides. All rights reserved.</p>
+    </footer>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const steps = [
+            {
+                title: 'Step 1: Load Data',
+                description: 'The process begins by loading your raw data from various sources. This could be text files, PDFs, database entries, or content from APIs. The goal is to gather all the information you want the system to know about.'
+            },
+            {
+                title: 'Step 2: Chunk Documents',
+                description: 'LLMs have context limits. To handle large documents, we split them into smaller, semantically coherent pieces or "chunks." This ensures that the embeddings we create later are focused and relevant.'
+            },
+            {
+                title: 'Step 3: Embed Chunks',
+                description: 'Each chunk of text is passed through an embedding model (e.g., text-embedding-ada-002). The model converts the text into a numerical vector, capturing its semantic meaning. Similar concepts will have similar vectors.'
+            },
+            {
+                title: 'Step 4: Store in Vector Database',
+                description: 'These numerical vectors (embeddings) and their corresponding text chunks are stored in a specialized vector database. This database is optimized for efficient similarity search.'
+            },
+            {
+                title: 'Step 5: User Query',
+                description: 'The online process starts when a user submits a query. This is the question you want to ask your knowledge base.'
+            },
+            {
+                title: 'Step 6: Embed Query',
+                description: 'The user\'s query is converted into a vector using the same embedding model from the indexing phase. This ensures we are comparing "apples to apples" in the vector space.'
+            },
+            {
+                title: 'Step 7: Search & Retrieve',
+                description: 'The system searches the vector database for the document chunks whose vectors are most similar to the query vector. These top-k relevant chunks are retrieved.'
+            },
+            {
+                title: 'Step 8: Augment Prompt',
+                description: 'The retrieved chunks (the context) are combined with the original user query to form a new, detailed prompt. For example: "Context: [retrieved text]... Question: [original query]".'
+            },
+            {
+                title: 'Step 9: Generate Answer',
+                description: 'This augmented prompt is sent to the LLM. The model uses the provided context to generate a factual, relevant answer, significantly reducing the chance of making things up.'
+            }
+        ];
+
+        const stepElements = document.querySelectorAll('.step-item');
+        const stepConnectors = document.querySelectorAll('.step-connector');
+        const titleEl = document.getElementById('step-title');
+        const descriptionEl = document.getElementById('step-description');
+        const prevBtn = document.getElementById('prev-step');
+        const nextBtn = document.getElementById('next-step');
+
+        let currentStep = -1;
+
+        function updateUI(stepIndex) {
+            if (stepIndex < 0 || stepIndex >= steps.length) return;
+            currentStep = stepIndex;
+
+            titleEl.textContent = steps[currentStep].title;
+            descriptionEl.textContent = steps[currentStep].description;
+
+            stepElements.forEach((el, index) => {
+                el.classList.toggle('active', index === currentStep);
+                // Add active class to connectors leading up to the current step
+                if (index < stepConnectors.length) {
+                    stepConnectors[index].classList.toggle('active', index < currentStep);
+                }
+            });
+
+            prevBtn.disabled = currentStep === 0;
+            nextBtn.disabled = currentStep === steps.length - 1;
+
+            // scroll the explanation into view if it is not visible
+            const explanationEl = document.getElementById('rag-explanation');
+            explanationEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+        }
+
+        function resetToInitialState() {
+            currentStep = -1;
+            titleEl.textContent = "Let's Get Started!";
+            descriptionEl.textContent = "Select a step below to learn more about it. We'll start with the offline \"Indexing Pipeline\" where we prepare our knowledge base.";
+            stepElements.forEach(el => el.classList.remove('active'));
+            stepConnectors.forEach(el => el.classList.remove('active'));
+            prevBtn.disabled = true;
+            nextBtn.disabled = false;
+        }
+
+        stepElements.forEach((el, index) => {
+            el.addEventListener('click', () => updateUI(index));
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 0) {
+                updateUI(currentStep - 1);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < steps.length - 1) {
+                updateUI(currentStep + 1);
+            }
+        });
+
+        // Setup smooth scrolling for nav links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Set initial state
+        resetToInitialState();
+    });
+</script>
+</body>
+</html>
