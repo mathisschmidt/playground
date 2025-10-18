@@ -248,6 +248,7 @@
                         </template>
                         <template x-if="column.type.isSelectType()">
                             <select :id="column.name" x-model="newItem[column.name]">
+                                <option value="" selected>Choose...</option>
                                 <template x-for="option in column.options" :key="option.value">
                                     <option :value="option.value" x-text="option.label"></option>
                                 </template>
@@ -585,12 +586,12 @@
             newItem: {},
             tableInfos: tableInfos,
             addRow() {
-                this.tableInfos.addRow(this.newItem);  // Just pass the object directly
+                this.tableInfos.addRow(this.newItem);
                 this.newItem = this.tableInfos.initNewItem();
             },
             init() {
                 this.newItem = this.tableInfos.initNewItem();
-            },
+            }
         }
     }
 </script>
