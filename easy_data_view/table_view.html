@@ -230,7 +230,6 @@
 </head>
 <body>
 <div class="dashboard" x-data="table()">
-
     <div class="grid">
         <div class="card">
             <div class="card-header">
@@ -343,20 +342,8 @@
             return this.category === 'number';
         }
 
-        isDateType() {
-            return this.category === 'date';
-        }
-
         isSelectType() {
             return this.value === InputType.SELECT.value;
-        }
-
-        isSelectionType() {
-            return this.category === 'selection';
-        }
-
-        isButtonType() {
-            return this.category === 'button';
         }
 
         static values() {
@@ -370,43 +357,105 @@
             ];
         }
 
-        static fromValue(value) {
-            return InputType.values().find(type => type.value === value);
-        }
-
-        static getByCategory(category) {
-            return InputType.values().filter(type => type.category === category);
+        static fromJson(json) {
+            return new InputType(
+                json.value,
+                json.label,
+                json.category
+            );
         }
     }
 
     class ColumnInfo {
-        constructor(name, label, type = InputType.TEXT, sortable = false, searchable = false, showInTable = true, options = [], autoIncrement = false,) {
+        constructor(
+            name,
+            label,
+            type = InputType.TEXT,
+            sortable = false,
+            searchable = false,
+            showInTable = true,
+            options = [],
+            autoIncrement = false
+        ) {
             this.name = name;
             this.label = label;
             this.type = type;
             this.sortable = sortable;
             this.searchable = searchable;
             this.showInTable = showInTable;
-            this.options = options; // For select, radio, checkbox types
+            this.options = options;
             this.autoIncrement = autoIncrement;
+        }
+
+        static fromJson(json) {
+            return new ColumnInfo(
+                json.name,
+                json.label,
+                InputType.fromJson(json.type),
+                json.sortable,
+                json.searchable,
+                json.showInTable,
+                json.options,
+                json.autoIncrement
+            );
+        }
+    }
+
+    // Service that saves/loads table definitions + data to localStorage.
+    class TableStorageService {
+        static save(tableInfos, id) {
+            if (id === undefined) {
+                console.log('TableStorageService.save called without id');
+                return false
+            }
+            try {
+                localStorage.setItem(id, JSON.stringify(tableInfos));
+                return true;
+            } catch (e) {
+                console.warn('Failed to save table to localStorage', e);
+                return false;
+            }
+        }
+
+        static load(id) {
+            const raw = localStorage.getItem(id);
+            if (!raw) {
+                throw new Error(`No saved table with id ${id} found in localStorage`);
+            }
+            try {
+                return TableInfos.fromJson(JSON.parse(raw));
+            }catch (e) {
+                throw new Error(`Failed to parse stored table with id ${id}: ${e.message}`);
+            }
         }
     }
 
     /*TODO: add a checker for check that a columns is a type ColumnInfo*/
     /*TODO: find a way to manage the ID (all data will always have ID so we can make a global solution)*/
     class TableInfos {
-        constructor(columns = [], data = []) {
+        constructor(id, columns = [], data = []) {
+            this.id = id
             this.columns = columns;
             this.data = data;
             // Keep columns ordered by name so UI (form, headers, rows) stays consistent
             this.sortColumns();
-            this.validateDataStructure(false)
+            this.validateDataStructure(false);
         }
 
          // Sort columns alphabetically by name
          sortColumns() {
              this.columns.sort((a, b) => a.name.localeCompare(b.name));
          }
+
+        persist() {
+            try {
+                let res = TableStorageService.save(this, this.id);
+                if (!res) throw new Error('Save operation failed');
+            } catch (e) {
+                // TODO: add a notification
+                console.warn('Failed to persist table infos', e);
+            }
+        }
 
         get columnNames() {
             return this.columns.map(col => col.name);
@@ -457,6 +506,7 @@
         addRow(row) {
             this.validateRow(row)
             this.data.push(row);
+            this.persist();
         }
 
         removeRow(item) {
@@ -466,6 +516,7 @@
 
             if (index !== -1) {
                 this.data.splice(index, 1);
+                this.persist();
             } else {
                 throw new Error(`Row not found in data`);
             }
@@ -483,19 +534,34 @@
                 this.data.forEach(row => {
                     row[column.name] = defaultValue;
                 });
+                this.persist();
             } else {
                 throw new Error('Column with this name already exists');
             }
         }
+
+        static fromJson(json) {
+            const columns = json.columns.map(colJson => ColumnInfo.fromJson(colJson));
+            return new TableInfos(
+                json.id,
+                columns,
+                json.data
+            );
+        }
     }
 
-
-
     function table() {
-        return {
-            newItem: {},
-            tableInfos: new TableInfos(
-                [
+        let id = 'easy_data_view_table_data_1';
+        let tableInfos = null;
+
+        try {
+            tableInfos = TableStorageService.load(id);
+        } catch (e) {
+            console.warn('No saved table found, initializing new table.', e);
+        }
+
+        if (!tableInfos) {
+            tableInfos = new TableInfos(id, [
                     new ColumnInfo('id', 'ID', InputType.NUMBER, true, true, true, [], true),
                     new ColumnInfo('user', 'User', InputType.TEXT, true, true),
                     new ColumnInfo('status', 'Status', InputType.SELECT, true, true, true, [
@@ -512,7 +578,12 @@
                     { id: 4, user: 'Emily Brown', status: 'active', amount: 4120 },
                     { id: 5, user: 'David Lee', status: 'inactive', amount: 890 }
                 ]
-            ),
+            );
+        }
+
+        return {
+            newItem: {},
+            tableInfos: tableInfos,
             addRow() {
                 this.tableInfos.addRow(this.newItem);  // Just pass the object directly
                 this.newItem = this.tableInfos.initNewItem();
