@@ -1,0 +1,22 @@
+---
+# For configuration options and examples, please see:
+# https://gethomepage.dev/configs/services/
+
+- Server management:
+    - Nginx:
+        icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/nginx-proxy-manager.png
+        href: http://141.94.21.234:81/
+        description: Reverse proxy manager
+    - Cloudflare:
+        icon: cloudflare.png
+        href: https://dash.cloudflare.com/3b01aeef64fcd7dbcfcf0e8307ef1e0e/mathisschmidt.com
+        description: DNS management
+
+- My self hosted services:
+    - Actual budget:
+        icon: actual-budget.png
+        href: https://actualbudget.mathisschmidt.com/
+        description: My actual budget instance.
+    - Seafile:
+        icon: seafile.svg
+        href: https://seafile.mathisschmidt.com
