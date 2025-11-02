@@ -77,6 +77,20 @@ def get_css():
             transform: translateY(-2px);
         }}
 
+        .normal-upload {{
+            background-color: var(--surface) !important;
+            border: 2px solid var(--border) !important;
+            border-radius: 8px !important;
+        }}
+
+        .normal-upload:hover {{
+            border-color: var(--accent) !important;
+        }}
+
+        .q-toggle__thumb {{
+            background-color: var(--accent) !important;
+        }}
+
         .border-accent {{
             border-color: var(--accent) !important;
             background-color: var(--elevated) !important;
