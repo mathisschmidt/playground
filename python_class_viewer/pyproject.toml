@@ -1,8 +1,16 @@
 [project]
-name = "python-class-viewer"
+name = "python_class_viewer"
 version = "0.1.0"
 description = "Web application that generates class diagrams from Python files"
 requires-python = ">=3.13"
 dependencies = [
-    "nicegui>=1.3.8"
+    "nicegui>=1.3.8",
+    "sqlmodel>=0.0.27",
 ]
+
+[project.scripts]
+python_class_viewer = "python_class_viewer.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

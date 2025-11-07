@@ -1,8 +1,8 @@
 from nicegui import ui
 from nicegui.events import UploadEventArguments
 
-from colors import COLORS
-from src.services.class_diagram_generator import ClassDiagramGenerator
+from python_class_viewer.utils.colors import COLORS
+from python_class_viewer.services.class_diagram_generator import ClassDiagramGenerator
 
 class HomePage:
 
