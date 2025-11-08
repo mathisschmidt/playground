@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional
 from uuid import UUID, uuid4
 from sqlmodel import SQLModel, Field, select
-from src.python_class_viewer.services.database_manager import DatabaseManager
+from python_class_viewer.services.database_manager import DatabaseManager
 
 
 class UploadInfo(SQLModel, table=True):

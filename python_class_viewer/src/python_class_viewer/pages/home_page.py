@@ -1,8 +1,14 @@
+import logging
+
 from nicegui import ui
 from nicegui.events import UploadEventArguments
 
+from python_class_viewer.services.database_manager import DatabaseManager
+from python_class_viewer.model.upload_info import UploadInfo
 from python_class_viewer.utils.colors import COLORS
 from python_class_viewer.services.class_diagram_generator import ClassDiagramGenerator
+
+logger = logging.getLogger(__name__)
 
 class HomePage:
 
@@ -10,11 +16,13 @@ class HomePage:
         self._diagram_container = None
         self._raw_diagram_container = None
         self._header = None
+        self._uploaded_file: UploadInfo | None = None
 
     def render(self):
         self.header()
         with ui.row().classes('w-full items-center justify-between mb-8'):
             self.upload_section()
+            self.upload_info_card()
 
         with ui.row().classes('w-full items-center justify-between mb-8'):
             self.diagram_container()
@@ -40,22 +48,37 @@ class HomePage:
     def header(self):
         if self._header is None:
             self._header = ui.row().classes('w-full')
-            with self._header:
-                # Header with title
-                ui.markdown('# Python Class Diagram Viewer').style(f'color: {COLORS["text_primary"]}; margin: 0;')
-                ui.markdown('Upload a Python file to generate a class diagram').style(
-                    f'color: {COLORS["text_secondary"]}; margin: 0;')
+            with (self._header):
+                with ui.element("h1").classes("text-3xl font-bold text-center w-full"):
+                    ui.label('Python Class Diagram Viewer')
         return self._header
 
     async def handle_upload(self, e: UploadEventArguments):
-        print(f"Uploaded event: {e}")
+        logger.debug(f"Uploaded event: {e}")
         file_content = await e.file.read()
         try:
+            # Generate class diagram
             diagram_generator = ClassDiagramGenerator(file_content.decode('utf-8'))
             mermaid_diagram = diagram_generator.get_mermaid_diagram()
 
             self._diagram_container.set_content(mermaid_diagram)
             self._raw_diagram_container.set_content(mermaid_diagram)
+
+            # Analyze file and store upload info
+            self._uploaded_file = UploadInfo(
+                file_name=e.file.name,
+                file_size=len(file_content) / 1024,
+                number_class=len(diagram_generator.classes),
+                number_relation=sum(len(cls.bases) for cls in diagram_generator.classes),
+                number_property=sum(len(cls.attributes) for cls in diagram_generator.classes),
+                number_methods=sum(len(cls.methods) for cls in diagram_generator.classes)
+            )
+            await self.upload_info_card.refresh()
+            with DatabaseManager.get_session() as session:
+                session.add(self._uploaded_file)
+                session.commit()
+                logger.debug(f"Uploaded file: {self._uploaded_file.file_name}")
+
             ui.notify('Diagram generated successfully!', color='positive')
         except Exception as ex:
             ui.notify(f'Error: {str(ex)}', color='negative')
@@ -82,3 +105,18 @@ class HomePage:
                                     <line x1="5" y1="12" x2="19" y2="12"></line>
                                 </svg>
                                 ''', sanitize=False).style(f'color: {COLORS["accent"]}')
+
+    @ui.refreshable
+    def upload_info_card(self):
+        with ui.card().classes('w-full max-w-md p-4 mt-8 bg-[var(--surface)] border-2 border-[var(--border)] color-[var(--text-primary)]'):
+            ui.label('Info about uploaded file').classes('text-lg mb-2 text-center w-full')
+            if self._uploaded_file is None:
+                ui.label('No file uploaded yet.').classes('color-[var(--text-secondary)] text-center w-full')
+            else:
+                ui.label('File Name: ' + self._uploaded_file.file_name)
+                ui.label(f'File Size: {self._uploaded_file.file_size} KB')
+                ui.label(f'Number of Classes: {self._uploaded_file.number_class}')
+                ui.label(f'Number of Relationships: {self._uploaded_file.number_relation}')
+                ui.label(f'Number of Properties: {self._uploaded_file.number_property}')
+                ui.label(f'Number of Methods: {self._uploaded_file.number_methods}')
+                ui.label(f'Created At: {self._uploaded_file.created_at}')
