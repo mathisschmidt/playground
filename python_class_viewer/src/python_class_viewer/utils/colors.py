@@ -121,12 +121,5 @@ def get_css():
             border: 1px solid var(--border) !important;
             border-radius: 8px !important;
         }}
-
-        .mermaid-container {{
-            background-color: var(--surface) !important;
-            border: 1px solid var(--border) !important;
-            border-radius: 8px !important;
-            padding: 20px !important;
-        }}
     </style>
     """

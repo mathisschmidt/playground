@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 class HomePage:
 
     def __init__(self):
-        self._diagram_container = None
+        self._mermaid_data = None
         self._raw_diagram_container = None
         self._header = None
         self._uploaded_file: UploadInfo | None = None
@@ -24,26 +24,51 @@ class HomePage:
             self.upload_section()
             self.upload_info_card()
 
-        with ui.row().classes('w-full items-center justify-between mb-8'):
+        with ui.row().classes('w-full items-center mb-8'):
             self.diagram_container()
             self.raw_diagram_container()
 
         return "Welcome to the Home Page!"
 
+    def show_mermaid_diagram_dialog(self):
+        with ui.dialog() as dialog:
+            with ui.card().classes('w-[calc(100vw-2rem)] h-[calc(100vh-2rem)] m-4 p-0'):
+                with ui.row().classes('w-full justify-between items-center px-4 py-2 bg-primary/10'):
+                    ui.label('Class Diagram').classes('text-2xl font-bold')
+                    ui.button('Close', on_click=dialog.close, icon='close').props('flat round')
+
+                # Scrollable container for large diagrams
+                with ui.scroll_area().classes('w-full h-[calc(100%-3rem)]'):
+                    if self._mermaid_data:
+                        ui.mermaid(self._mermaid_data).classes('w-full')
+                    else:
+                        ui.mermaid('graph LR; Start --> Upload;').classes('w-full')
+        dialog.open()
+
+    def show_mermaid_raw_data_dialog(self):
+        with ui.dialog() as dialog:
+            with ui.card().classes('w-[calc(100vw-2rem)] h-[calc(100vh-2rem)] m-4 p-0'):
+                with ui.row().classes('w-full justify-between items-center px-4 py-2 bg-primary/10'):
+                    ui.label('Class Diagram').classes('text-2xl font-bold')
+                    ui.button('Close', on_click=dialog.close, icon='close').props('flat')
+
+                # Scrollable container for large diagrams
+                with ui.scroll_area().classes('w-full h-[calc(100%-3rem)]'):
+                    if self._mermaid_data:
+                        ui.code(self._mermaid_data).classes('w-full bg-[var(--surface)]')
+                    else:
+                        ui.code('# Upload a Python file to see the diagram code').classes('w-full bg-[var(--surface)]')
+        dialog.open()
+
     def diagram_container(self):
-        if self._diagram_container is None:
-            with ui.column().classes('items-center justify-between mb-8'):
-                ui.label('Mermaid Diagram:').style(f'color: {COLORS["text_primary"]}; font-weight: 600; font-size: 1.1rem;')
-                self._diagram_container = ui.mermaid('graph LR; Start --> Upload;').classes('mermaid-container')
-        return self._diagram_container
+        with ui.column().classes('items-center justify-between mb-8'):
+            ui.label('Mermaid Diagram:').style(f'color: {COLORS["text_primary"]}; font-weight: 600; font-size: 1.1rem;')
+            ui.button("Open mermaid diagrams", on_click=self.show_mermaid_diagram_dialog)
 
     def raw_diagram_container(self):
-        if self._raw_diagram_container is None:
-            with ui.column().classes('items-center justify-between mb-8'):
-                ui.label('Raw Mermaid Code:').style(
-                    f'color: {COLORS["text_primary"]}; font-weight: 600; font-size: 1.1rem; margin-top: 2rem;')
-                self._raw_diagram_container =  ui.code('# Upload a Python file to see the diagram code', language='mermaid').classes('code-container')
-        return self._raw_diagram_container
+        with ui.column().classes('items-center justify-between mb-8'):
+            ui.label('Raw mermaid data:').style(f'color: {COLORS["text_primary"]}; font-weight: 600; font-size: 1.1rem;')
+            ui.button("Open mermaid diagrams", on_click=self.show_mermaid_raw_data_dialog)
 
     def header(self):
         if self._header is None:
@@ -59,10 +84,7 @@ class HomePage:
         try:
             # Generate class diagram
             diagram_generator = ClassDiagramGenerator(file_content.decode('utf-8'))
-            mermaid_diagram = diagram_generator.get_mermaid_diagram()
-
-            self._diagram_container.set_content(mermaid_diagram)
-            self._raw_diagram_container.set_content(mermaid_diagram)
+            self._mermaid_data = diagram_generator.get_mermaid_diagram()
 
             # Analyze file and store upload info
             self._uploaded_file = UploadInfo(
