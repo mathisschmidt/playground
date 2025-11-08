@@ -54,6 +54,18 @@ class UploadInfo(SQLModel, table=True):
         description="Timestamp when the record was created"
     )
 
+    def to_dict(self) -> dict:
+        return {
+            "id": str(self.id),
+            "file_name": self.file_name,
+            "file_size": self.file_size,
+            "number_class": self.number_class,
+            "number_relation": self.number_relation,
+            "number_property": self.number_property,
+            "number_methods": self.number_methods,
+            "created_at": self.created_at.isoformat()
+        }
+
     @staticmethod
     def get_by_id(upload_id: UUID) -> Optional[UploadInfo]:
         """

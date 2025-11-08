@@ -28,6 +28,10 @@ class HomePage:
             self.diagram_container()
             self.raw_diagram_container()
 
+        with ui.row().classes('w-full items-center mb-8'):
+            ui.label('Global Upload Statistics:').style(f'color: {COLORS["text_primary"]}; font-weight: 600; font-size: 1.1rem;')
+            self.global_stats_table()
+
         return "Welcome to the Home Page!"
 
     def show_mermaid_diagram_dialog(self):
@@ -142,3 +146,31 @@ class HomePage:
                 ui.label(f'Number of Properties: {self._uploaded_file.number_property}')
                 ui.label(f'Number of Methods: {self._uploaded_file.number_methods}')
                 ui.label(f'Created At: {self._uploaded_file.created_at}')
+
+    @ui.refreshable
+    def global_stats_table(self):
+        grid = ui.aggrid({
+            'columnDefs': [
+                {'headerName': 'id', 'field': 'id', 'hide': True},
+                {'headerName': 'file name', 'field': 'file_name'},
+                {'headerName': 'file size', 'field': 'file_size'},
+                {'headerName': 'number class', 'field': 'number_class'},
+                {'headerName': 'number relation', 'field': 'number_relation'},
+                {'headerName': 'number property', 'field': 'number_property'},
+                {'headerName': 'number methods', 'field': 'number_methods'},
+                {'headerName': 'created at', 'field': 'created_at'},
+            ],
+            'rowData': [elem.to_dict() for elem in UploadInfo.get_all()]
+        })
+
+        # Button row
+        with ui.row():
+            ui.button('Refresh Data', on_click=self.global_stats_table.refresh, icon='refresh')
+
+            async def toggle_id_column():
+                id_col = grid.options['columnDefs'][0]
+                id_col['hide'] = not id_col.get('hide', False)
+                grid.update()
+
+            ui.button('Toggle ID Column', on_click=toggle_id_column, icon='visibility')
+
