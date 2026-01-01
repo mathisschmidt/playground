@@ -1,0 +1,11 @@
+version: '3'
+services:
+  homepage:
+    build: .
+    ports:
+      - "3200:3000"
+    restart: unless-stopped
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: homepage.mathisschmidt.com
+    container_name: homepage
+   
