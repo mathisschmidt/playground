@@ -13,7 +13,7 @@
         description: DNS management
     - Portainer:
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/portainer-dark.svg
-        href: https://homepage.mathisschmidt.com/
+        href: https://portainer.mathisschmidt.com/
         description: Docker management
 
 - My self hosted services:
