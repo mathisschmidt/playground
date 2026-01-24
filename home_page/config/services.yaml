@@ -24,3 +24,5 @@
     - Seafile:
         icon: seafile.svg
         href: https://seafile.mathisschmidt.com
+    - "IDFC: PDF -> CSV":
+        href: http://141.94.21.234:9000/
