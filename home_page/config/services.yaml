@@ -5,7 +5,7 @@
 - Server management:
     - Nginx:
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/nginx-proxy-manager.png
-        href: http://141.94.21.234:81/
+        href: http://204.168.225.39:1004/
         description: Reverse proxy manager
     - Cloudflare:
         icon: cloudflare.png
