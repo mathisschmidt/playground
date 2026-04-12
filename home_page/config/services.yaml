@@ -15,6 +15,8 @@
         icon: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/portainer-dark.svg
         href: https://portainer.mathisschmidt.com/
         description: Docker management
+    - Central room:
+        href: https://204.168.225.39:9090/
 
 - My self hosted services:
     - Actual budget:
@@ -25,6 +27,6 @@
         icon: seafile.svg
         href: https://seafile.mathisschmidt.com
     - "IDFC: PDF -> CSV":
-        href: http://141.94.21.234:9000/
+        href: http://204.168.225.39:1007/
     - "My-world":
         href: https://mathisschmidt.com
