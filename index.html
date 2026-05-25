@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculateur salaire brut/net France</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen py-8 px-4">
+
+  <div class="max-w-2xl mx-auto" x-data="salaryCalculator()">
+
+    <header class="mb-6 flex items-start justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-medium text-gray-900">Calculateur de salaire</h1>
+        <p class="text-sm text-gray-500 mt-1">Brut, net et net après impôt — France 2025</p>
+      </div>
+      <button
+        @click="settingsOpen = true"
+        class="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        Réglages
+      </button>
+    </header>
+
+    <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+
+      <!-- Mode de saisie -->
+      <div>
+        <label class="block text-sm text-gray-600 mb-2">Type de saisie</label>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+          <template x-for="m in modes" :key="m.key">
+            <button
+              @click="mode = m.key"
+              :class="mode === m.key
+                ? 'bg-emerald-50 border-emerald-600 text-emerald-900'
+                : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'"
+              class="px-3 py-2 text-sm border rounded-lg transition"
+              x-text="m.label">
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- Montant -->
+      <div>
+        <label class="block text-sm text-gray-600 mb-2" x-text="currentLabel"></label>
+        <div class="relative">
+          <input
+            type="number"
+            x-model.number="amount"
+            min="0"
+            step="100"
+            class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" />
+          <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">€</span>
+        </div>
+      </div>
+
+      <!-- Statut -->
+      <div>
+        <label class="block text-sm text-gray-600 mb-2">Statut</label>
+        <div class="grid grid-cols-2 gap-2">
+          <button
+            @click="status = 'non-cadre'"
+            :class="status === 'non-cadre'
+              ? 'bg-emerald-50 border-emerald-600 text-emerald-900'
+              : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'"
+            class="px-3 py-2 text-sm border rounded-lg transition">
+            Non-cadre <span class="text-xs opacity-70" x-text="'(' + ratesPercent.nonCadre + ' %)'"></span>
+          </button>
+          <button
+            @click="status = 'cadre'"
+            :class="status === 'cadre'
+              ? 'bg-emerald-50 border-emerald-600 text-emerald-900'
+              : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'"
+            class="px-3 py-2 text-sm border rounded-lg transition">
+            Cadre <span class="text-xs opacity-70" x-text="'(' + ratesPercent.cadre + ' %)'"></span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Parts fiscales -->
+      <div>
+        <label class="block text-sm text-gray-600 mb-2">Parts fiscales</label>
+        <input
+          type="number"
+          x-model.number="parts"
+          min="1"
+          max="10"
+          step="0.5"
+          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" />
+        <p class="text-xs text-gray-400 mt-1">1 = célibataire · 2 = couple · +0,5 par enfant (1er et 2e), +1 à partir du 3e</p>
+      </div>
+
+    </div>
+
+    <!-- Résultats -->
+    <div class="mt-6 space-y-3">
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <p class="text-xs text-gray-500">Brut annuel</p>
+          <p class="text-xl font-medium text-gray-900 mt-1" x-text="fmt(brut)"></p>
+          <p class="text-xs text-gray-400 mt-1" x-text="fmt(brut / 12) + ' / mois'"></p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <p class="text-xs text-gray-500">Net avant impôt</p>
+          <p class="text-xl font-medium text-gray-900 mt-1" x-text="fmt(net)"></p>
+          <p class="text-xs text-gray-400 mt-1" x-text="fmt(net / 12) + ' / mois'"></p>
+        </div>
+      </div>
+
+      <div class="bg-emerald-50 rounded-lg border border-emerald-200 p-4">
+        <p class="text-xs text-emerald-800">Net après impôt sur le revenu</p>
+        <p class="text-2xl font-medium text-emerald-950 mt-1" x-text="fmt(netAfterTax)"></p>
+        <p class="text-xs text-emerald-700 mt-1" x-text="fmt(netAfterTax / 12) + ' / mois'"></p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white rounded-lg border border-gray-200 p-3">
+          <p class="text-xs text-gray-500">Charges sociales</p>
+          <p class="text-sm font-medium text-gray-900 mt-1" x-text="fmt(charges)"></p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-3">
+          <p class="text-xs text-gray-500">Impôt sur le revenu</p>
+          <p class="text-sm font-medium text-gray-900 mt-1" x-text="fmt(impot)"></p>
+        </div>
+      </div>
+
+      <p class="text-xs text-gray-400 leading-relaxed pt-2">
+        Estimation indicative. Tu peux ajuster les taux de cotisations, l'abattement et le barème via le bouton « Réglages ».
+      </p>
+
+    </div>
+
+    <!-- Modal Settings -->
+    <div
+      x-show="settingsOpen"
+      x-cloak
+      @keydown.escape.window="settingsOpen = false"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40"
+      @click.self="settingsOpen = false">
+      <div
+        x-show="settingsOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        class="bg-white rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+
+        <div class="flex items-center justify-between p-5 border-b border-gray-200">
+          <h2 class="text-lg font-medium text-gray-900">Réglages des taux</h2>
+          <button @click="settingsOpen = false" class="text-gray-400 hover:text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="p-5 space-y-6">
+
+          <!-- Taux cotisations -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-900 mb-3">Cotisations sociales (% du brut)</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs text-gray-500 mb-1">Non-cadre</label>
+                <div class="relative">
+                  <input
+                    type="number"
+                    x-model.number="ratesPercent.nonCadre"
+                    min="0" max="100" step="0.5"
+                    class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                  <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+                </div>
+              </div>
+              <div>
+                <label class="block text-xs text-gray-500 mb-1">Cadre</label>
+                <div class="relative">
+                  <input
+                    type="number"
+                    x-model.number="ratesPercent.cadre"
+                    min="0" max="100" step="0.5"
+                    class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                  <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Abattement -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-900 mb-3">Abattement frais professionnels</h3>
+            <div class="relative max-w-[12rem]">
+              <input
+                type="number"
+                x-model.number="abattementPercent"
+                min="0" max="100" step="1"
+                class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+              <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+            </div>
+            <p class="text-xs text-gray-400 mt-1">Appliqué au net imposable avant calcul de l'impôt</p>
+          </div>
+
+          <!-- Barème -->
+          <div>
+            <h3 class="text-sm font-medium text-gray-900 mb-3">Barème de l'impôt (par part)</h3>
+            <div class="space-y-2">
+              <template x-for="(b, i) in brackets" :key="i">
+                <div class="grid grid-cols-12 gap-2 items-center">
+                  <div class="col-span-6">
+                    <div class="relative">
+                      <input
+                        type="number"
+                        x-model.number="b.limit"
+                        :disabled="i === brackets.length - 1"
+                        :placeholder="i === brackets.length - 1 ? 'Au-delà' : 'Plafond €'"
+                        class="w-full px-3 py-2 pr-8 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-50 disabled:text-gray-400" />
+                      <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">€</span>
+                    </div>
+                  </div>
+                  <div class="col-span-5">
+                    <div class="relative">
+                      <input
+                        type="number"
+                        x-model.number="b.rate"
+                        min="0" max="100" step="0.5"
+                        class="w-full px-3 py-2 pr-8 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                      <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">%</span>
+                    </div>
+                  </div>
+                  <button
+                    @click="removeBracket(i)"
+                    :disabled="brackets.length <= 1"
+                    class="col-span-1 text-gray-400 hover:text-red-500 disabled:opacity-30 disabled:hover:text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/>
+                    </svg>
+                  </button>
+                </div>
+              </template>
+            </div>
+            <button
+              @click="addBracket()"
+              class="mt-3 text-sm text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Ajouter une tranche
+            </button>
+          </div>
+
+        </div>
+
+        <div class="flex items-center justify-between gap-2 p-5 border-t border-gray-200 bg-gray-50 rounded-b-xl">
+          <button
+            @click="resetDefaults()"
+            class="px-4 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-100">
+            Valeurs par défaut
+          </button>
+          <button
+            @click="settingsOpen = false"
+            class="px-4 py-2 text-sm text-white bg-emerald-600 rounded-lg hover:bg-emerald-700">
+            Fermer
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <style>[x-cloak] { display: none !important; }</style>
+
+  <script>
+    const DEFAULTS = {
+      ratesPercent: { nonCadre: 22, cadre: 25 },
+      abattementPercent: 10,
+      brackets: [
+        { limit: 11497,  rate: 0 },
+        { limit: 29315,  rate: 11 },
+        { limit: 83823,  rate: 30 },
+        { limit: 180294, rate: 41 },
+        { limit: null,   rate: 45 }
+      ]
+    };
+
+    function salaryCalculator() {
+      return {
+        mode: 'brut',
+        amount: 45000,
+        status: 'cadre',
+        parts: 1,
+        settingsOpen: false,
+
+        ratesPercent: JSON.parse(JSON.stringify(DEFAULTS.ratesPercent)),
+        abattementPercent: DEFAULTS.abattementPercent,
+        brackets: JSON.parse(JSON.stringify(DEFAULTS.brackets)),
+
+        modes: [
+          { key: 'brut',   label: 'Brut annuel' },
+          { key: 'net',    label: 'Net annuel' },
+          { key: 'brut-m', label: 'Brut mensuel' },
+          { key: 'net-m',  label: 'Net mensuel' }
+        ],
+
+        defaults: {
+          'brut': 45000,
+          'net': 35000,
+          'brut-m': 3750,
+          'net-m': 2900
+        },
+
+        get currentLabel() {
+          const labels = {
+            'brut': 'Salaire brut annuel',
+            'net': 'Salaire net annuel (avant impôt)',
+            'brut-m': 'Salaire brut mensuel',
+            'net-m': 'Salaire net mensuel (avant impôt)'
+          };
+          return labels[this.mode];
+        },
+
+        get rate() {
+          const pct = this.status === 'cadre' ? this.ratesPercent.cadre : this.ratesPercent.nonCadre;
+          return (pct || 0) / 100;
+        },
+
+        get brut() {
+          const v = this.amount || 0;
+          if (this.mode === 'brut')   return v;
+          if (this.mode === 'brut-m') return v * 12;
+          if (this.mode === 'net')    return v / (1 - this.rate);
+          if (this.mode === 'net-m')  return (v * 12) / (1 - this.rate);
+          return 0;
+        },
+
+        get charges()     { return this.brut * this.rate; },
+        get net()         { return this.brut - this.charges; },
+        get impot()       { return this.calcTax(this.net * (1 - (this.abattementPercent || 0) / 100), this.parts); },
+        get netAfterTax() { return this.net - this.impot; },
+
+        calcTax(taxableIncome, parts) {
+          if (!parts || parts <= 0) return 0;
+          const perPart = taxableIncome / parts;
+          let tax = 0, prev = 0;
+          for (const b of this.brackets) {
+            const limit = (b.limit === null || b.limit === '' || b.limit === undefined) ? Infinity : b.limit;
+            const r = (b.rate || 0) / 100;
+            if (perPart > limit) {
+              tax += (limit - prev) * r;
+              prev = limit;
+            } else {
+              tax += (perPart - prev) * r;
+              break;
+            }
+          }
+          return Math.max(0, tax * parts);
+        },
+
+        fmt(n) {
+          return Math.round(n).toLocaleString('fr-FR') + ' €';
+        },
+
+        addBracket() {
+          // On insère une nouvelle tranche juste avant la dernière (qui est "au-delà")
+          const lastIdx = this.brackets.length - 1;
+          const prev = this.brackets[lastIdx - 1];
+          const newLimit = prev && prev.limit ? prev.limit + 10000 : 10000;
+          this.brackets.splice(lastIdx, 0, { limit: newLimit, rate: this.brackets[lastIdx].rate });
+        },
+
+        removeBracket(i) {
+          if (this.brackets.length > 1) this.brackets.splice(i, 1);
+        },
+
+        resetDefaults() {
+          this.ratesPercent = JSON.parse(JSON.stringify(DEFAULTS.ratesPercent));
+          this.abattementPercent = DEFAULTS.abattementPercent;
+          this.brackets = JSON.parse(JSON.stringify(DEFAULTS.brackets));
+        },
+
+        init() {
+          this.$watch('mode', (newMode) => {
+            this.amount = this.defaults[newMode];
+          });
+        }
+      };
+    }
+  </script>
+
+</body>
+</html>

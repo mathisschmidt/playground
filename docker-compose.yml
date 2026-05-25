@@ -1,0 +1,7 @@
+services:
+  calculateur:
+    build: .
+    container_name: french_salary_calculator
+    ports:
+      - "${HOST_PORT:-8080}:80"
+    restart: unless-stopped
