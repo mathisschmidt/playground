@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculateur portage salarial</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen py-8 px-4">
+
+  <div class="max-w-2xl mx-auto" x-data="portageCalculator()">
+
+    <header class="mb-6 flex items-start justify-between gap-4">
+      <div>
+        <h1 class="text-2xl font-medium text-gray-900">Calculateur portage salarial</h1>
+        <p class="text-sm text-gray-500 mt-1">Revenu net réel à partir du TJM — France 2026</p>
+      </div>
+      <button
+        @click="settingsOpen = true"
+        class="flex items-center gap-2 px-3 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        Réglages
+      </button>
+    </header>
+
+    <!-- Inputs -->
+    <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-6">
+
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">TJM</label>
+          <div class="relative">
+            <input
+              type="number"
+              x-model.number="tjm"
+              min="0" step="10"
+              class="w-full px-4 py-3 pr-10 border border-gray-200 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400">€/j</span>
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm text-gray-600 mb-2">Jours de mission</label>
+          <input
+            type="number"
+            x-model.number="days"
+            min="0" max="365" step="1"
+            class="w-full px-4 py-3 border border-gray-200 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" />
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-sm text-gray-600 mb-2">Parts fiscales du foyer</label>
+        <input
+          type="number"
+          x-model.number="parts"
+          min="1" max="10" step="0.5"
+          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500" />
+        <p class="text-xs text-gray-400 mt-1">1 = célibataire · 2 = couple · +0,5 par enfant</p>
+      </div>
+
+      <!-- Récap réglages actifs -->
+      <div class="flex flex-wrap gap-2 pt-2 border-t border-gray-100">
+        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">Gestion <span x-text="settings.fraisGestion + ' %'"></span></span>
+        <span class="text-xs px-2 py-1 bg-gray-100 text-gray-600 rounded">Charges <span x-text="settings.chargesSociales + ' %'"></span></span>
+        <span x-show="settings.apportDaffaires" class="text-xs px-2 py-1 bg-emerald-100 text-emerald-800 rounded">
+          + Indemnité apport <span x-text="settings.apportTaux + ' %'"></span>
+        </span>
+      </div>
+
+    </div>
+
+    <!-- Résultats -->
+    <div class="mt-6 space-y-3">
+
+      <!-- CA HT -->
+      <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <p class="text-xs text-gray-500">Chiffre d'affaires HT facturé au client</p>
+        <p class="text-xl font-medium text-gray-900 mt-1" x-text="fmt(ca)"></p>
+        <p class="text-xs text-gray-400 mt-1" x-show="days > 0" x-text="`${tjm} € × ${days} j`"></p>
+      </div>
+
+      <!-- Cascade -->
+      <div class="bg-white rounded-lg border border-gray-200 divide-y divide-gray-100">
+        <div class="flex items-center justify-between p-3">
+          <span class="text-sm text-gray-600">Frais de gestion société de portage (<span x-text="settings.fraisGestion + ' %'"></span>)</span>
+          <span class="text-sm font-medium text-gray-900" x-text="'− ' + fmt(fraisGestion)"></span>
+        </div>
+        <div class="flex items-center justify-between p-3">
+          <span class="text-sm text-gray-600">Charges sociales (<span x-text="settings.chargesSociales + ' %'"></span>)</span>
+          <span class="text-sm font-medium text-gray-900" x-text="'− ' + fmt(chargesSociales)"></span>
+        </div>
+        <div x-show="settings.apportDaffaires" class="flex items-center justify-between p-3">
+          <span class="text-sm text-gray-600">Indemnité d'apport d'affaires (<span x-text="settings.apportTaux + ' %'"></span>)</span>
+          <span class="text-sm font-medium text-emerald-700" x-text="'+ ' + fmt(apportDaffaires)"></span>
+        </div>
+        <div class="flex items-center justify-between p-3">
+          <span class="text-sm text-gray-600">Impôt sur le revenu</span>
+          <span class="text-sm font-medium text-gray-900" x-text="'− ' + fmt(impot)"></span>
+        </div>
+      </div>
+
+      <!-- Net salarial avant impôt -->
+      <div class="grid grid-cols-2 gap-3">
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <p class="text-xs text-gray-500">Salaire net avant impôt</p>
+          <p class="text-lg font-medium text-gray-900 mt-1" x-text="fmt(netAvantIR)"></p>
+          <p class="text-xs text-gray-400 mt-1" x-show="days > 0" x-text="fmt(netAvantIR / 12) + ' / mois lissé'"></p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <p class="text-xs text-gray-500">Ratio sur CA HT</p>
+          <p class="text-lg font-medium text-gray-900 mt-1" x-text="ca > 0 ? (netAvantIR / ca * 100).toFixed(1) + ' %' : '—'"></p>
+          <p class="text-xs text-gray-400 mt-1">avant impôt</p>
+        </div>
+      </div>
+
+      <!-- Net final -->
+      <div class="bg-emerald-50 rounded-lg border border-emerald-200 p-4">
+        <p class="text-xs text-emerald-800">Net dans la poche après impôt</p>
+        <p class="text-2xl font-medium text-emerald-950 mt-1" x-text="fmt(netFinal)"></p>
+        <p class="text-xs text-emerald-700 mt-1" x-show="days > 0">
+          <span x-text="fmt(netFinal / 12) + ' / mois lissé'"></span>
+          <span x-text="' · ' + fmt(days > 0 ? netFinal / days : 0) + ' / jour facturé'"></span>
+        </p>
+        <p class="text-xs text-emerald-700 mt-2" x-show="ca > 0">
+          Soit <span class="font-medium" x-text="(netFinal / ca * 100).toFixed(1) + ' %'"></span> du CA HT conservé
+        </p>
+      </div>
+
+      <p class="text-xs text-gray-400 leading-relaxed pt-2">
+        Estimation indicative. Les taux réels varient selon la société de portage (frais de gestion entre 5 et 10 %) et tes frais professionnels déductibles. L'indemnité d'apport d'affaires concerne uniquement les contrats CDI de portage.
+      </p>
+
+    </div>
+
+    <!-- Modal Settings -->
+    <div
+      x-show="settingsOpen"
+      x-cloak
+      @keydown.escape.window="settingsOpen = false"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40"
+      @click.self="settingsOpen = false">
+      <div
+        x-show="settingsOpen"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        class="bg-white rounded-xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
+
+        <div class="flex items-center justify-between p-5 border-b border-gray-200 sticky top-0 bg-white z-10">
+          <h2 class="text-lg font-medium text-gray-900">Réglages</h2>
+          <button @click="settingsOpen = false" class="text-gray-400 hover:text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="p-5 space-y-6">
+
+          <!-- Portage -->
+          <section>
+            <h3 class="text-sm font-medium text-gray-900 mb-3">Société de portage</h3>
+            <div class="space-y-3">
+              <div>
+                <label class="block text-xs text-gray-500 mb-1">Frais de gestion société de portage</label>
+                <div class="relative">
+                  <input type="number" x-model.number="settings.fraisGestion" min="0" max="100" step="0.5"
+                    class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                  <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">Typiquement entre 5 % et 10 % du CA HT</p>
+              </div>
+              <div>
+                <label class="block text-xs text-gray-500 mb-1">Charges sociales (patronales + salariales)</label>
+                <div class="relative">
+                  <input type="number" x-model.number="settings.chargesSociales" min="0" max="100" step="0.5"
+                    class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                  <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">Appliquées au CA après frais de gestion. Environ 45 % à 50 %</p>
+              </div>
+            </div>
+          </section>
+
+          <!-- Apport d'affaires -->
+          <section>
+            <h3 class="text-sm font-medium text-gray-900 mb-3">Indemnité d'apport d'affaires</h3>
+            <label class="flex items-start gap-3 p-3 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+              <input type="checkbox" x-model="settings.apportDaffaires" class="mt-0.5 rounded text-emerald-600 focus:ring-emerald-500" />
+              <div class="flex-1">
+                <p class="text-sm text-gray-900">Activer l'indemnité d'apport d'affaires</p>
+                <p class="text-xs text-gray-500 mt-1">Versée en CDI de portage pour compenser le fait que tu apportes toi-même les missions. Habituellement 5 % du CA HT.</p>
+              </div>
+            </label>
+            <div class="mt-3" x-show="settings.apportDaffaires" x-cloak>
+              <label class="block text-xs text-gray-500 mb-1">Taux de l'indemnité</label>
+              <div class="relative max-w-[12rem]">
+                <input type="number" x-model.number="settings.apportTaux" min="0" max="100" step="0.5"
+                  class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Impôt -->
+          <section>
+            <h3 class="text-sm font-medium text-gray-900 mb-3">Impôt sur le revenu</h3>
+            <div class="mb-3">
+              <label class="block text-xs text-gray-500 mb-1">Abattement frais professionnels</label>
+              <div class="relative max-w-[12rem]">
+                <input type="number" x-model.number="settings.abattement" min="0" max="100" step="1"
+                  class="w-full px-3 py-2 pr-8 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">%</span>
+              </div>
+              <p class="text-xs text-gray-400 mt-1">10 % par défaut pour un salarié</p>
+            </div>
+
+            <p class="text-xs text-gray-500 mb-2">Barème par tranche</p>
+            <div class="space-y-2">
+              <template x-for="(b, i) in settings.brackets" :key="i">
+                <div class="grid grid-cols-12 gap-2 items-center">
+                  <div class="col-span-6">
+                    <div class="relative">
+                      <input
+                        type="number"
+                        x-model.number="b.limit"
+                        :disabled="i === settings.brackets.length - 1"
+                        :placeholder="i === settings.brackets.length - 1 ? 'Au-delà' : 'Plafond €'"
+                        class="w-full px-3 py-2 pr-8 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 disabled:bg-gray-50 disabled:text-gray-400" />
+                      <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">€</span>
+                    </div>
+                  </div>
+                  <div class="col-span-5">
+                    <div class="relative">
+                      <input type="number" x-model.number="b.rate" min="0" max="100" step="0.5"
+                        class="w-full px-3 py-2 pr-8 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                      <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs">%</span>
+                    </div>
+                  </div>
+                  <button
+                    @click="removeBracket(i)"
+                    :disabled="settings.brackets.length <= 1"
+                    class="col-span-1 text-gray-400 hover:text-red-500 disabled:opacity-30">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/>
+                    </svg>
+                  </button>
+                </div>
+              </template>
+            </div>
+            <button @click="addBracket()" class="mt-3 text-sm text-emerald-700 hover:text-emerald-900 flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+              </svg>
+              Ajouter une tranche
+            </button>
+          </section>
+
+        </div>
+
+        <div class="flex items-center justify-between gap-2 p-5 border-t border-gray-200 bg-gray-50 rounded-b-xl sticky bottom-0">
+          <button @click="resetDefaults()"
+            class="px-4 py-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-100">
+            Valeurs par défaut
+          </button>
+          <button @click="settingsOpen = false"
+            class="px-4 py-2 text-sm text-white bg-emerald-600 rounded-lg hover:bg-emerald-700">
+            Fermer
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <style>[x-cloak] { display: none !important; }</style>
+
+  <script>
+    const DEFAULTS = {
+      fraisGestion: 8,        // Frais société portage % CA HT
+      chargesSociales: 48,    // Charges sociales sur compte d'activité
+      apportDaffaires: true,  // Indemnité apport (CDI portage)
+      apportTaux: 5,          // 5% du CA HT
+      abattement: 10,         // Abattement IR frais pro salarié
+      brackets: [
+        { limit: 11497,  rate: 0 },
+        { limit: 29315,  rate: 11 },
+        { limit: 83823,  rate: 30 },
+        { limit: 180294, rate: 41 },
+        { limit: null,   rate: 45 }
+      ]
+    };
+
+    function portageCalculator() {
+      return {
+        tjm: 500,
+        days: 200,
+        parts: 1,
+        settingsOpen: false,
+        settings: JSON.parse(JSON.stringify(DEFAULTS)),
+
+        get ca() { return (this.tjm || 0) * (this.days || 0); },
+
+        get fraisGestion() {
+          return this.ca * (this.settings.fraisGestion || 0) / 100;
+        },
+
+        get compteActivite() {
+          return this.ca - this.fraisGestion;
+        },
+
+        get chargesSociales() {
+          return this.compteActivite * (this.settings.chargesSociales || 0) / 100;
+        },
+
+        get apportDaffaires() {
+          if (!this.settings.apportDaffaires) return 0;
+          return this.ca * (this.settings.apportTaux || 0) / 100;
+        },
+
+        get netAvantIR() {
+          return this.compteActivite - this.chargesSociales + this.apportDaffaires;
+        },
+
+        get impot() {
+          const taxable = this.netAvantIR * (1 - (this.settings.abattement || 0) / 100);
+          return this.calcTax(taxable, this.parts);
+        },
+
+        get netFinal() {
+          return this.netAvantIR - this.impot;
+        },
+
+        calcTax(taxableIncome, parts) {
+          if (!parts || parts <= 0 || taxableIncome <= 0) return 0;
+          const perPart = taxableIncome / parts;
+          let tax = 0, prev = 0;
+          for (const b of this.settings.brackets) {
+            const limit = (b.limit === null || b.limit === '' || b.limit === undefined) ? Infinity : b.limit;
+            const r = (b.rate || 0) / 100;
+            if (perPart > limit) {
+              tax += (limit - prev) * r;
+              prev = limit;
+            } else {
+              tax += (perPart - prev) * r;
+              break;
+            }
+          }
+          return Math.max(0, tax * parts);
+        },
+
+        fmt(n) {
+          if (!isFinite(n)) return '— €';
+          return Math.round(n).toLocaleString('fr-FR') + ' €';
+        },
+
+        addBracket() {
+          const lastIdx = this.settings.brackets.length - 1;
+          const prev = this.settings.brackets[lastIdx - 1];
+          const newLimit = prev && prev.limit ? prev.limit + 10000 : 10000;
+          this.settings.brackets.splice(lastIdx, 0, { limit: newLimit, rate: this.settings.brackets[lastIdx].rate });
+        },
+
+        removeBracket(i) {
+          if (this.settings.brackets.length > 1) this.settings.brackets.splice(i, 1);
+        },
+
+        resetDefaults() {
+          this.settings = JSON.parse(JSON.stringify(DEFAULTS));
+        }
+      };
+    }
+  </script>
+
+</body>
+</html>
