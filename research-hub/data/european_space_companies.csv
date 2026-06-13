@@ -1,0 +1,205 @@
+Company,Country,HQ City,Founded,Segment,Description,Website
+Isar Aerospace,Germany,Ottobrunn (Munich),2018,Launch,"Spectrum small-medium launcher; first orbital attempt March 2025 from Andøya; ~400 employees; ELC shortlistee",isaraerospace.com
+Rocket Factory Augsburg (RFA),Germany,Augsburg,2018,Launch,RFA ONE microlauncher (~500 kg to SSO); part of OHB Group; ELC shortlistee,rfa.space
+HyImpulse,Germany,Neuenstadt am Kocher,2018,Launch,Hybrid paraffin/LOX SR75 suborbital + SL1 orbital; €45M raised 2025,hyimpulse.de
+ArianeGroup,France,Les Mureaux,2015,Launch,Ariane 6 prime; >9000 staff; Airbus/Safran JV,ariane.group
+MaiaSpace,France,Vernon,2022,Launch,Maia partially reusable mini-launcher; ArianeGroup subsidiary; ELC shortlistee,maiaspace.com
+Latitude,France,Reims,2019,Launch,Zephyr microlauncher; €30M raised,latitude.aero
+HyPrSpace,France,Bordeaux,2019,Launch,Hybrid-propellant suborbital and orbital launch vehicles; €21M raised,hyprspace.com
+PLD Space,Spain,Elche,2011,Launch,Miura 1 (suborbital) and Miura 5 (orbital); ELC shortlistee,pldspace.com
+Orbex,UK,"Forres, Scotland",2015,Launch,Prime microlauncher; £20M UK govt investment; acquired by The Exploration Company Jan 2026; ELC shortlistee,orbex.space
+Skyrora,UK,"Edinburgh, Scotland",2017,Launch,"Skyrora XL launch vehicle, hybrid space-tug",skyrora.com
+Avio,Italy,Colleferro,,Launch,Vega-C operator; lead contractor for European solid motors,avio.com
+SaxaVord Spaceport,UK,"Unst, Shetland",,Launch,Spaceport host,saxavord.com
+B2Space,UK,"Newport, Wales",2016,Launch,Rockoon balloon-launch system,b2-space.com
+T-Minus Engineering,Netherlands,Delft,2010,Launch,Sounding/suborbital rockets (Barracuda),t-minus.nl
+SpaceForest,Poland,Gdynia,2011,Launch,Polish suborbital Perun rocket,spaceforest.pl
+Nammo,Norway,Raufoss,,Launch,"Hybrid propulsion, Ariane 6 boosters, missile propulsion",nammo.com
+ARCAspace,Romania,Râmnicu Vâlcea,1999,Launch,EcoRocket and various suborbital/anti-ballistic prototypes,arcaspace.com
+Pangea Aerospace,Spain,Barcelona,2018,Launch,MesoCryo aerospike methane/LOX engine; in-space propulsion,pangeaaerospace.com
+ThrustMe,France,Verrières-le-Buisson,2017,Propulsion,Iodine-fuelled electric propulsion,thrustme.fr
+Exotrail,France,Massy,2017,Propulsion,Hall-effect thrusters + Spacedrop in-space logistics; $58M raised,exotrail.com
+Enpulsion,Austria,Wiener Neustadt,2017,Propulsion,FEEP IFM Nano Thruster; >200 thrusters flown,enpulsion.com
+ISPTech,Germany,,2023,Propulsion,Non-toxic HyNOx & HIP_11 thrusters; DLR spin-off; €5.5M seed 2026,isptech.com
+GATE Space,Austria,Vienna,,Propulsion,Electric propulsion with active thrust vector control,gate.space
+Findus Venture,Austria,,,Propulsion,Chemical propulsion for capsules/landers,
+Ienai Space,Spain,Madrid,2019,Propulsion,Electrospray Athena propellant for small satellites,ienai.space
+Arkadia Space,Spain,Castellón,,Propulsion,Green propulsion thrusters,
+Dawn Aerospace,Netherlands,Delft,,Propulsion,Non-toxic propulsion; 170+ thrusters delivered,dawnaerospace.com
+Aurora Propulsion Technologies,Finland,Espoo,,Propulsion,"Orbital thrusters, plasma brakes for deorbit",aurorapt.fi
+Persei Space,Spain,Madrid,,Propulsion,Electrodynamic-tether deorbit device,
+Orbital Machines,Norway,Trondheim,,Propulsion,Standardised electric propellant pumps for launchers,orbitalmachines.com
+Solstorm,Norway,Trondheim,,Propulsion,Ionospheric magnetic-drag deorbit & spacecraft inspection,solstorm.no
+Morpheus Space,Germany,Dresden,,Propulsion,NanoFEEP thrusters with AI mission planning,morpheus-space.com
+DCubed,Germany,Munich,,Propulsion,"Deployable structures, release actuators, in-space manufacturing",dcubed.space
+MT Aerospace,Germany,Augsburg,,Propulsion,"Propellant tanks, structures, microlauncher studies",
+ICEYE,Finland,Espoo,2014,Earth Observation,World-leading commercial SAR microsatellite constellation; ~600 employees,iceye.com
+Constellr,Germany,Freiburg,2020,Earth Observation,Thermal-IR microsats for agriculture/water,constellr.com
+OroraTech,Germany,Munich,2018,Earth Observation,Wildfire detection via thermal-IR nanosats,ororatech.com
+Kuva Space,Finland,Espoo,2016,Earth Observation,Hyperspectral EO constellation,kuvaspace.com
+Reaktor Space Lab,Finland,Espoo,,Earth Observation,Small-sat platforms and EO payloads,reaktorspace.com
+Open Cosmos,UK,"Harwell, Didcot",2015,Earth Observation,End-to-end smallsat missions; OpenConstellation platform,open-cosmos.com
+Satellite Vu,UK,London,2016,Earth Observation,Thermal IR (HotSat) for climate/ESG,satellitevu.com
+Aerospacelab,Belgium,Mont-Saint-Guibert,2018,Satellite Manufacturing,Vertically integrated smallsat manufacturer; ~330 staff; building 500 sat/yr megafactory,aerospacelab.com
+Hydrosat,Luxembourg,,2017,Earth Observation,Thermal-IR for water/drought,hydrosat.com
+Prométhée Earth Intelligence,France,Paris,,Earth Observation,EO Copernicus Contributing Mission,
+Kayrros,France,Paris,2016,Earth Observation,Energy/methane analytics from EO; EIB-backed,kayrros.com
+Unseenlabs,France,Rennes,2015,Earth Observation,RF-geolocation maritime constellation; €112.5M raised,unseenlabs.space
+Galeio,France,Paris,,Earth Observation,Geospatial foundation models on satellite imagery,
+Aldoria,France,Paris,,Earth Observation/SSA,SSA & EO (formerly Share My Space),aldoria.com
+NorthStar Earth & Space,Luxembourg,,,SSA,SSA from space,
+Spire Global EU,Luxembourg,,,Satcom/EO,"Weather, AIS, ADS-B from CubeSat constellation",spire.com
+GeoVille,Austria,Innsbruck,,Earth Observation,Land-monitoring services,
+GMV,Spain,Madrid,,Ground Systems,"Flight dynamics, ground systems, Galileo ground segment",
+Satlantis,Spain,Bilbao,,Earth Observation,High-res EO smallsats,satlantis.com
+Sateliot,Spain,Barcelona,2018,Satcom/IoT,5G IoT NB-IoT from LEO; first European in S-band,sateliot.space
+Sen,UK,London,2014,Earth Observation,Ultra HD video from space; first sat 2022,sen.com
+Geosat,Portugal,Évora,,Earth Observation,Geosat-1/2 EO operator; lead of Atlantic Constellation,geosat.space
+Spotlite,Portugal,,,Earth Observation,Infrastructure monitoring via SAR/ground motion,
+askEarth,Switzerland,,,Earth Observation,LLM-driven geospatial intelligence agent,
+EnduroSat,Bulgaria,Sofia,2015,Satellite Manufacturing,Modular CubeSat/microsat platforms; 250+ staff; $165M raised 2025,endurosat.com
+Creotech Instruments,Poland,Warsaw,2011,Satellite Manufacturing,HyperSat platform; €52M ESA CAMILA contract,creotech.pl
+KP Labs,Poland,Gliwice,,Earth Observation,AI on-board processors (Antelope/Intuition-1),kplabs.space
+SatRev,Poland,Wrocław,,Earth Observation,STORK and other 2-3U EO nanosats,satrev.space
+Scanway,Poland,Wrocław,,Components,Optical instruments; flew on Ariane 6 maiden flight,scanway.space
+PIAP-Space,Poland,,,Components,Robotics & manipulators,
+GMV Innovating Solutions,Romania,Bucharest,2009,Ground Systems,GMV Romanian subsidiary,
+Terrasigna,Romania,Bucharest,,Earth Observation,Copernicus downstream,
+TRL Space Systems,Czech Republic,Brno,,Satellite Manufacturing,"Hyperspectral, LiDAR, lunar (LUGO)",trlspace.com
+World from Space,Czech Republic,Brno,,Earth Observation,DynaCrop API agri-EO,
+Spaceknow,Czech Republic,Prague,,Earth Observation,Global economic activity from EO,spaceknow.com
+KappaZeta,Estonia,Tartu,,Earth Observation,SAR/optical for agriculture,
+Crystalspace,Estonia,Tartu,,Components,Space-grade cameras,
+Spaceit,Estonia,Tartu,,Ground Systems,MCS-as-a-service,
+Datel,Estonia,Tallinn,,Earth Observation,EO e-government,
+Tesselo,Portugal,Lisbon,,Earth Observation,AI satellite mapping for forestry/insurance,
+Vake,Norway,Oslo,,Earth Observation,Dark-vessel AI maritime tracking,
+AnsuR Technologies,Norway,Oslo,,Earth Observation,Low-bandwidth EO compression,
+OHB Hellas,Greece,Athens/Patras/Heraklion,2018,Satellite Manufacturing,"Onboard AI computing, smallsats; first dedicated space firm in Greece",ohb-hellas.gr
+Prisma Electronics,Greece,Alexandroupoli,,Satellite Manufacturing,Maritime nanosat (MICE-1),prismaelectronics.eu
+Libre Space Foundation,Greece,Athens,,Open Source,Open-source satellites & SatNOGS ground network,libre.space
+Planetek Hellas,Greece,Athens,,Earth Observation,EO services,
+Hellas Sat,Greece,Athens,,Satcom,GEO comms operator,
+Ubotica Technologies,Ireland,Dublin,2016,Components,AI/edge computing for EO satellites,ubotica.com
+Skytek,Ireland,Dublin,,Ground Systems,Mission ops software,
+Adwäiseo,Luxembourg,,,Earth Observation,EO analytics,
+Captis Space Systems,Germany,,,Earth Observation,VLEO CubeSats,
+GomSpace,Denmark,Aalborg,2007,Satellite Manufacturing,Leading European CubeSat/nanosat manufacturer; Nasdaq Stockholm listed,gomspace.com
+AAC Clyde Space,UK/Sweden,Glasgow + Uppsala/Linköping,,Satellite Manufacturing,Nanosatellite platforms,aac-clyde.space
+NanoAvionics,Lithuania,Vilnius,,Satellite Manufacturing,CubeSat buses; subsidiary of Kongsberg,nanoavionics.com
+ISISpace,Netherlands,Delft,,Satellite Manufacturing,CubeSat platforms; supported 367+ launched sats,isispace.nl
+Hemeria,France,Toulouse,,Satellite Manufacturing,Small satellites for institutional/defense,
+Anywaves,France,Toulouse,,Components,Antennas for small sats,anywaves.com
+U-Space,France,Toulouse,,Satellite Manufacturing,Small satellite platforms,u-space.fr
+Argotec,Italy,Turin,2008,Satellite Manufacturing,"Microsatellites (LICIACube, ArgoMoon); ANDROMEDA lunar comms",argotecgroup.com
+D-Orbit,Italy,Fino Mornasco (Como),2011,In-Space Services,ION orbital transfer vehicle; >20 missions flown,dorbit.space
+Tyvak International,Italy,Turin,,Satellite Manufacturing,Smallsats,
+Sitael,Italy,Mola di Bari,,Satellite Manufacturing,"Small-sat platforms, electric propulsion",sitael.com
+OHB Italia,Italy,Milan/Rome,,Satellite Manufacturing,OHB subsidiary,
+Thales Alenia Space,France/Italy,Cannes + Rome,,Prime,Major satellite prime; >8k staff,
+Airbus Defence & Space,Multi,Toulouse + Friedrichshafen + Stevenage,,Prime,Major satellite/launch prime,
+OHB SE,Germany,Bremen,,Prime,Major prime + many subsidiaries,
+Mynaric,Germany,Gilching,2009,Components,Laser/optical inter-satellite comms; in restructuring 2025 - CAUTION,
+Tesat-Spacecom,Germany,Backnang,,Components,Optical comms terminals (Airbus subsidiary),tesat.de
+Beyond Gravity,Switzerland,Zurich,,Components,Formerly RUAG Space; major structures supplier,beyondgravity.com
+Swissto12,Switzerland,Renens,,Satellite Manufacturing,HummingSat small GEO platform; 3D-printed RF,swissto12.com
+C3S Electronics Development,Hungary,Budapest,2012,Components,"CubeSat platforms, OBCs, EPS; PLATO/SMILE contributors",c3s.hu
+REMRED,Hungary,Budapest,,Components,Radiation instruments; co-building REMTECH sat factory,
+Admatis,Hungary,Miskolc,,Components,Thermal & structural hardware for 10+ ESA missions,
+4iG Space and Defence Technologies,Hungary,Budapest,,Satcom,Satellite operator (Axiom Space partner),
+Frentech Aerospace,Czech Republic,Brno,,Components,Precision mechanisms,
+S.A.B. Aerospace,Czech Republic,Brno,,Components,Vega-C VAMPIRE adapter; payload dispensers,
+Spacemanic,Czech Republic/Slovakia,Brno,,Satellite Manufacturing,CubeSat platforms,
+OHB Czechspace,Czech Republic,Brno,,Satellite Manufacturing,OHB subsidiary,
+Space Inventor,Denmark,Aalborg,,Satellite Manufacturing,Micro-sat manufacturing,
+Satlab,Denmark,Aalborg,,Components,Radios and ground equipment for smallsats,
+Sternula,Denmark,Aalborg,,Satcom,VDES maritime nanosat operator,
+Terma,Denmark,Lystrup,,Components,"Space avionics, ground EGSE",
+Rovsing,Denmark,Copenhagen,,Ground Systems,Satellite ground test equipment,
+Cobham Satcom,Denmark,Lyngby,,Satcom,Satellite terminals,
+Réaltra Space Systems Engineering,Ireland,Dublin,2017,Components,Ariane 6 telemetry/video systems,realtra.space
+InnaLabs,Ireland,Dublin,,Components,High-performance gyroscopes (ESA Ramses/Apophis),
+EireComposites,Ireland,Galway,,Components,Composite spacecraft structures,
+Enbio,Ireland,Dublin,,Components,Thermal coatings (flew on Solar Orbiter),
+Pilot Photonics,Ireland,Dublin,,Components,Photonic ICs for satcom,
+Arralis,Ireland,Limerick,,Components,RF/mmWave components,
+Mbryonics,Ireland,Galway,2014,Components,Photonic optical satcom terminals; €17.5M EIC,mbryonics.com
+Varadis,Ireland,Cork,,Components,RADFET radiation sensors; on ISS and Artemis,
+Active Space Technologies,Portugal,Coimbra,,Components,High-precision mechanisms; thermal hardware,
+LusoSpace,Portugal,Lisbon,,Components,"Magnetic torquers, magnetometers, ADCS",
+Spin.Works,Portugal,Lisbon,,Components,"GNC, computer vision, autonomous systems",
+Tekever Space,Portugal,Lisbon,,Earth Observation,Maritime surveillance + UAVs; lead of ASTRIIS,
+CEiiA,Portugal,Matosinhos,,Satellite Manufacturing,N3O smallsat platform,
+Evoleo,Portugal,,,Components,"Onboard computers, power subsystems",
+Edisoft,Portugal,Lisbon,,Ground Systems,Defence/space systems integration,
+Eptune Engineering,Portugal,,,Components,Space & wind hardware,
+NPC Spacemind,Italy,Bologna,,Satellite Manufacturing,CubeSat platforms,
+AVS - Added Value Solutions,Spain,Elgoibar,,Components,Big Science & space equipment,
+Alén Space,Spain,Vigo,,Satellite Manufacturing,End-to-end nanosatellite solutions,alen.space
+FOSSA Systems,Spain,Madrid,,Satellite Manufacturing,Pico-satellite IoT constellation,
+DHV Technology,Spain,Málaga,,Components,Solar panels for smallsats,dhvtechnology.com
+Hispasat,Spain,Madrid,,Satcom,GEO operator,
+Hisdesat,Spain,Madrid,,Satcom,Military comms,
+Indra Space,Spain,Madrid,,Ground Systems,"Ground systems, GNSS, SST",
+Sidereus Space Dynamics,Italy,Naples,,Launch,Small reusable launcher EOS,sidereus.space
+GAUSS Srl,Italy,Rome,,Satellite Manufacturing,Nanosatellites,
+Apogeo Space,Italy,Milan,,Satcom/IoT,IoT nano-sat constellation,
+Decen Space,Germany,,,Ground Systems,Decentralised infrastructure for satellite ops,
+TTTech Aerospace,Austria,Vienna,,Components,"Deterministic networks for Orion, Lunar Gateway, Ariane 6",
+Peak Technology,Austria,Holzhausen,,Components,Composite tanks/pressure vessels for launchers,
+TEST-FUCHS,Austria,,,Components,Valves and fluid systems for Ariane 6,
+OHB Austria,Austria,Graz,,Components,"Onboard computers, payload electronics",
+Eidsvoll Electronics (EIDEL),Norway,Eidsvoll,,Components,Telemetry; payload electronics (MicroSAR),
+IDEAS,Norway,Oslo,,Components,Radiation detector ASICs,
+Eutelsat OneWeb,France/UK,Paris/London,,Satcom,LEO broadband mega-constellation (~600+ sats),
+SES,Luxembourg,Betzdorf,,Satcom,GEO/MEO operator (O3b mPOWER),
+Inmarsat (ViaSat),UK,London,,Satcom,Mobile satellite services,
+OQ Technology,Luxembourg,Leudelange,2016,Satcom/IoT,NB-IoT direct-to-device; €25M EIB venture debt,oqtec.space
+Hiber,Netherlands,Amsterdam,,Satcom/IoT,IoT satellite network; €26M EIC backing,hiber.global
+Kineis,France,Toulouse,,Satcom/IoT,IoT nano-sat constellation (Argos heritage),
+Lacuna Space,UK,Harwell,,Satcom/IoT,LoRa-based IoT from space,lacuna.space
+Cailabs,France,Rennes,,Components,Laser/optical ground stations; ESA contract,
+Archangel Lightworks,UK,Oxford,,Components,Ultra-high-performance optical comms terminals,
+Stellar Project,Italy,Padua,,Components,Laser comms terminals,
+All.Space,UK,Reading,,Satcom,Multi-orbit smart terminals (formerly Isotropic Systems),
+Gatehouse Satcom,Denmark,Nørresundby,,Satcom,Satcom software; 5G NTN test,
+Methera Global,UK,,,Satcom,Ka-band MEO/HEO constellation,
+Stratospheric Platforms,UK,Cambridge,,Satcom,HAPS (adjacent to space),
+Telespazio,Italy,Rome,,Ground Systems,"Services, in-orbit servicing (Leonardo subsidiary)",
+Avanti Communications,UK,London,,Satcom,Ka-band GEO operator,
+TerraSpark,Belgium,,2024,Space-based Solar,Wireless energy transmission; €5M raised 2026,terraspark.eu
+Stellar Nuclear,Czech Republic,,,Power,Nuclear-power systems for space,
+ClearSpace,Switzerland,Lausanne,2018,Debris Removal,€86M ESA ClearSpace-1 contract; UK CLEAR mission,clearspace.today
+Astroscale UK,UK,Harwell,,Debris Removal,ELSA-d demo completed; ESA/UK/US partners,astroscale.com
+The Exploration Company,Germany/France,Munich + Bordeaux,2021,In-Space Services,"Nyx modular reusable spaceship; refuelable in orbit; $160M Series B 2024, ~$230M total",exploration.space
+Infinite Orbits,France,Toulouse,2017,In-Space Services,Autonomous nanosat for GEO life extension/inspection,
+ATMOS Space Cargo,Germany,Stuttgart,,In-Space Services,Orbital re-entry vehicles (PHOENIX 2/3); €25.7M Series A,
+Yuri,Germany,Meckenbeuren,2019,In-Space Manufacturing,Microgravity research/manufacturing services (ScienceTaxi),yurigravity.com
+Space Forge,UK,Cardiff,2018,In-Space Manufacturing,ForgeStar reusable in-space manufacturing satellite,spaceforge.com
+Frontier Space,UK,,,In-Space Manufacturing,In-space bioprocessing platform,
+Neuraspace,Portugal,Coimbra,2020,SSA/STM,AI space traffic management,neuraspace.com
+Spaceflux,UK,,,SSA,SSA optical sensor network; UKRI funded,
+Vyoma,Germany,Darmstadt,,SSA/STM,Space situational awareness & STM,
+Look Up Space,France,Paris,,SSA,Radar-based SSA,
+RISE (Romanian InSpace Engineering),Romania,,,In-Space Services,Close-proximity operations,
+SAGA Space Architects,Denmark,Copenhagen,,Habitat,Habitat architecture (ESA Lunar Remote Camp),
+KSAT (Kongsberg Satellite Services),Norway,Tromsø,,Ground Stations,Global polar ground-station network,ksat.no
+Leaf Space,Italy,Lomazzo (Como),,Ground Stations,Ground-station-as-a-service; expanding Leaf Line Kirkwall,leaf.space
+Goonhilly Earth Station,UK,Cornwall,,Ground Stations,Deep-space and commercial ground station,goonhilly.org
+SSC (Swedish Space Corporation),Sweden,Solna,,Ground Stations,"Major ground services, Esrange spaceport",sscspace.com
+Space Applications Services,Belgium,Sint-Stevens-Woluwe,,Ground Systems,Yamcs MCS; ground segment,
+Bright Ascension,UK,Dundee,,Ground Systems,Flight software; mission ops,
+HITEC Luxembourg,Luxembourg,,,Ground Stations,Antenna systems & ground stations,
+Polar Orbital,Finland,,,Ground Stations,Satellite ground station systems (ESA BIC 2026),
+ispace EUROPE,Luxembourg,Luxembourg City,,Lunar,TENACIOUS rover (first European rover to Moon); MAGPIE ESA,ispace-inc.com
+Puli Space Technologies,Hungary,Budapest,2010,Lunar,Lunar rover; water-detection payloads,
+Maana Electric,Luxembourg,Foetz,,Lunar/ISRU,In-situ resource utilisation (regolith → solar panels),
+Space Cargo Unlimited,Luxembourg,,,In-Space Manufacturing,In-orbit microgravity biotech,
+iSEE,Austria,,,Exploration,Smallsat exploration missions,
+Space DOTS,UK,London,,In-Space Manufacturing,In-space material testing CubeSats,
+Septentrio,Belgium,Leuven,,GNSS,High-accuracy GNSS receivers,septentrio.com
+u-blox,Switzerland,Thalwil,,GNSS,GNSS modules,
+FocalPoint Positioning,UK,Cambridge,,GNSS,Software-based GNSS resilience,
+Skudo,Estonia,Tallinn,,Cybersecurity,Satellite-comms cybersecurity,
+SKYA,Finland,Espoo,,GNSS,Precision navigation for drones (ESA BIC 2026),
+Space Solar,UK,Harwell,,Space-based Solar,CASSIOPeiA SBSP architecture; demonstrated 360° beaming,spacesolar.co.uk
