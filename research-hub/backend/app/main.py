@@ -3,6 +3,7 @@ profiled so the frontend can pick an appropriate rendering."""
 
 from __future__ import annotations
 
+import os
 import re
 from datetime import datetime, timezone
 from pathlib import Path
@@ -15,14 +16,24 @@ from fastapi.staticfiles import StaticFiles
 from .profiler import profile_file, read_csv
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA_DIR = ROOT / "data"
-FRONTEND_DIST = ROOT / "frontend" / "dist"
 
-app = FastAPI(title="Research Hub", version="0.1.0")
+# Configuration (all overridable via environment, e.g. in Docker / Portainer).
+DATA_DIR = Path(os.environ.get("RESEARCH_HUB_DATA_DIR", ROOT / "data"))
+FRONTEND_DIST = Path(
+    os.environ.get("RESEARCH_HUB_FRONTEND_DIST", ROOT / "frontend" / "dist")
+)
+APP_TITLE = os.environ.get("RESEARCH_HUB_TITLE", "Research Hub")
+CORS_ORIGINS = [
+    o.strip()
+    for o in os.environ.get("RESEARCH_HUB_CORS_ORIGINS", "*").split(",")
+    if o.strip()
+] or ["*"]
+
+app = FastAPI(title=APP_TITLE, version="0.1.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -40,6 +51,16 @@ def list_csv_files() -> dict[str, Path]:
     if not DATA_DIR.exists():
         return {}
     return {slugify(p.stem): p for p in sorted(DATA_DIR.glob("*.csv"))}
+
+
+@app.get("/api/health")
+def health() -> dict:
+    return {
+        "status": "ok",
+        "title": APP_TITLE,
+        "dataDir": str(DATA_DIR),
+        "datasets": len(list_csv_files()),
+    }
 
 
 @app.get("/api/datasets")

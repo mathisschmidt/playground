@@ -1,0 +1,40 @@
+# Research Hub — production stack (Portainer-friendly).
+#
+#   docker compose up -d --build
+#
+# In Portainer: add a Stack from this repository (or paste this file), set the
+# environment variables in the UI, and deploy. All knobs are env vars below.
+
+services:
+  hub:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: ${HUB_IMAGE:-research-hub:latest}
+    container_name: ${HUB_CONTAINER_NAME:-research-hub}
+    restart: ${HUB_RESTART:-unless-stopped}
+    ports:
+      - "${HUB_PORT:-8000}:8000"
+    environment:
+      PORT: "8000"
+      RESEARCH_HUB_TITLE: ${RESEARCH_HUB_TITLE:-Research Hub}
+      RESEARCH_HUB_DATA_DIR: /app/data
+      RESEARCH_HUB_FRONTEND_DIST: /app/frontend/dist
+      RESEARCH_HUB_CORS_ORIGINS: ${RESEARCH_HUB_CORS_ORIGINS:-*}
+    volumes:
+      # Drop CSVs into this host folder (or a named volume) — no rebuild needed.
+      - ${HUB_DATA_PATH:-./data}:/app/data
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health')
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      # Helps identify the stack in Portainer.
+      com.research-hub.service: "hub"

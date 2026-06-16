@@ -1,0 +1,19 @@
+# Research Hub — test stack. Runs the backend test suite and exits.
+#
+#   docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
+#
+# Exit code reflects the test result, so this works in CI and Portainer too.
+
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: backend-base
+    container_name: ${HUB_CONTAINER_NAME:-research-hub}-test
+    environment:
+      RESEARCH_HUB_DATA_DIR: /app/data
+    # Mount source so tests run against the working tree without a rebuild.
+    volumes:
+      - ./backend:/app/backend
+    command: python -m pytest -q

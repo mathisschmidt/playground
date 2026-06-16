@@ -1,0 +1,10 @@
+# Build artifacts and deps — rebuilt inside the image
+frontend/node_modules
+frontend/dist
+backend/**/__pycache__
+**/*.pyc
+.venv
+.git
+.idea
+.vscode
+*.log
