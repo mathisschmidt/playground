@@ -12,6 +12,9 @@ services:
       dockerfile: Dockerfile
       target: runtime
     image: ${HUB_IMAGE:-research-hub:latest}
+    # This image is built locally from the Dockerfile, not pulled from a
+    # registry. "build" tells Compose to build it and never attempt a pull.
+    pull_policy: build
     container_name: ${HUB_CONTAINER_NAME:-research-hub}
     restart: ${HUB_RESTART:-unless-stopped}
     ports:
