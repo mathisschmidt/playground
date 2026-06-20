@@ -23,8 +23,12 @@ services:
       RESEARCH_HUB_FRONTEND_DIST: /app/frontend/dist
       RESEARCH_HUB_CORS_ORIGINS: ${RESEARCH_HUB_CORS_ORIGINS:-*}
     volumes:
-      # Drop CSVs into this host folder (or a named volume) — no rebuild needed.
-      - ${HUB_DATA_PATH:-./data}:/app/data
+      # Named volume for datasets. On first deploy Docker auto-seeds it with the
+      # CSVs bundled in the image, so the hub is populated out of the box.
+      # Add more CSVs via Portainer: Volumes -> hub_data -> Browse -> Upload.
+      # (To use a host folder instead, replace the line below with:
+      #   - /absolute/path/on/host:/app/data )
+      - hub_data:/app/data
     healthcheck:
       test:
         - CMD
@@ -38,3 +42,6 @@ services:
     labels:
       # Helps identify the stack in Portainer.
       com.research-hub.service: "hub"
+
+volumes:
+  hub_data:

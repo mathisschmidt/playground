@@ -65,8 +65,11 @@ cp .env.example .env          # optional — sensible defaults exist
 docker compose up -d --build  # -> http://localhost:8000 (HUB_PORT)
 ```
 
-The `data/` folder is mounted into the container (`HUB_DATA_PATH`), so you can
-drop new CSVs in and they appear immediately — no rebuild.
+Datasets live in a named volume (`hub_data`). On the first deploy Docker
+seeds it with the CSVs bundled in the image, so the hub is populated out of
+the box. To add more CSVs later, use **Portainer → Volumes → `hub_data` →
+Browse → Upload** (no rebuild). To use a host folder instead, edit the
+`volumes:` line in `docker-compose.yml` (see the comment there).
 
 ### Development (hot reload, two containers)
 
@@ -88,11 +91,13 @@ docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
 1. **Stacks → Add stack → Repository** (point at this repo, compose path
    `research-hub/docker-compose.yml`) — or use the **Web editor** and paste the
    file.
+   Set the **Repository reference** to the branch that contains this code, and
+   the **Compose path** to `research-hub/docker-compose.yml` (no leading space).
 2. Add the variables from `.env.example` under **Environment variables**
-   (at minimum set `HUB_PORT` and, if you want a host folder for CSVs,
-   `HUB_DATA_PATH`).
+   (at minimum set `HUB_PORT`).
 3. **Deploy the stack.** The container has a healthcheck on `/api/health`, so
-   Portainer shows it as healthy once it's up.
+   Portainer shows it as healthy once it's up. The bundled dataset appears
+   automatically; add more via the `hub_data` volume browser.
 
 ### Environment variables
 
@@ -102,7 +107,7 @@ docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
 | `RESEARCH_HUB_CORS_ORIGINS`  | `*`              | Allowed CORS origins (comma-separated)    |
 | `RESEARCH_HUB_DATA_DIR`      | `/app/data`      | Where the backend reads CSVs (in-container)|
 | `HUB_PORT`                   | `8000`           | Published host port (production)          |
-| `HUB_DATA_PATH`              | `./data`         | Host folder mounted as the dataset dir    |
+| `HUB_DATA_PATH`              | `./data`         | Host folder for the dev data bind mount   |
 | `HUB_IMAGE`                  | `research-hub:latest` | Image tag                            |
 | `HUB_CONTAINER_NAME`         | `research-hub`   | Container name                            |
 | `HUB_RESTART`                | `unless-stopped` | Restart policy                            |
