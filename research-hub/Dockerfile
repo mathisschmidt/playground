@@ -42,10 +42,21 @@ CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}
 # ---------- Stage 3: production image (API + built UI) ----------
 FROM backend-base AS runtime
 
+USER root
+
 # Built frontend from stage 1 (served by the backend).
 COPY --from=frontend --chown=appuser:appuser /build/frontend/dist /app/frontend/dist
+
+# Keep a pristine copy of the bundled datasets; the entrypoint syncs any that
+# are missing into the data volume on start, so repo CSVs appear on redeploy.
+COPY --chown=appuser:appuser data/ /app/seed-data/
+COPY --chown=appuser:appuser docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh
+
+USER appuser
 
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
     CMD python -c "import os,urllib.request; urllib.request.urlopen(f\"http://127.0.0.1:{os.environ.get('PORT','8000')}/api/health\")" || exit 1
 
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
 CMD uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}

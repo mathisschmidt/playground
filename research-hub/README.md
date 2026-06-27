@@ -119,6 +119,16 @@ docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
 Copy a CSV into `data/` — that's it. The first row must be the header.
 Refresh the hub and it appears on the home page, profiled and rendered.
 
+**Local / bare-metal:** the backend reads `data/` directly, so the file shows
+up on the next refresh.
+
+**Docker / Portainer:** datasets live in the `hub_data` volume. On container
+start an entrypoint copies any CSV bundled in the image into that volume if it
+isn't already there, so a CSV committed to `data/` in the repo **appears
+automatically on the next redeploy** (existing files and uploads are never
+overwritten). To add one without redeploying, upload it via
+**Portainer → Volumes → `hub_data` → Browse → Upload**.
+
 ## API
 
 - `GET /api/health` — liveness + dataset count (used by the Docker healthcheck)

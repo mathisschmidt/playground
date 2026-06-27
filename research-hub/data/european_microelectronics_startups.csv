@@ -1,0 +1,103 @@
+Name,Country,Founded,Employees (approx.),Website,Technology / Focus,Description,Notes (funding / status)
+Belfort,Belgium,2025,,https://belfortlabs.com,SECURITY - Security techhnology,Hardware for encrypted compute (FHE),
+Pharrowtech,Belgium,2018,,https://pharrowtech.com,RF - Wireless,RF ICs for high speed wireless links,
+Swave,Belgium,2022,,https://swave.io,PHOTONICS - Photonic based startups,Holographic chips based on diffractive photonics,
+Atlant 3D,Denmark,2018,,https://atlant3d.com,MFG - Manufacturing related,Atomic scale 3d material printing,
+Phanofi,Denmark,2022,,https://phanofi.com,PHOTONICS - Photonic based startups,Optical transceivers for data centers & HPC,
+Skycore Semiconductors,Denmark,2021,,https://skycore-semi.com,ANALOG - All things analog,Switched capacitor based integrated power converters,
+Flow Computing,Finland,2024,,https://flow-computing.com,HPC - High performance computing,Parallel processing IP,
+SemiQon,Finland,2023,,https://semiqon.tech,QUANTUM - Quantum computing,Quantum processors,
+Alice & Bob,France,2020,n/a,https://alice-bob.com,QUANTUM - Cat-qubit quantum,Fault-tolerant superconducting cat-qubit quantum computers,EUR100M+; Series B incl. NVIDIA venture arm
+Aniah,France,2019,,https://aniah.fr,EDA - Design automation tools,Circuit analysis software,
+Arago,France,2024,~20,https://arago.inc,PHOTONICS - Photonic based startups,Photonic computing platform,"$26M seed; angels from Apple, Arm, Hugging Face"
+C12,France,2020,~62,https://c12qe.com,QUANTUM - Carbon-nanotube qubit quantum,Quantum processors from carbon-nanotube spin qubits; ENS spin-off,~EUR29M; operates own Quantum Fab in Paris
+HawAI.tech,France,2019,,https://hawai.tech,AI - AI hardware,AI accelerators,
+Keysom,France,2022,,https://keysom.io,RISC-V - RISC-V based startups,RISC-V design platform,
+Lighton,France,2015,,https://lighton.ai,PHOTONICS - Photonic based startups,Optical computing platform,
+NcodiN,France,2023,,https://ncodin.com,PHOTONICS - Photonic based startups,Optical interposers,
+Neurxcore,France,2023,,https://neurxcore.com,AI - AI hardware,AI accelerator IP based on NVDLA,
+Pasqal,France,2019,~200 (est.),https://pasqal.com,QUANTUM - Neutral-atom quantum,Full-stack neutral-atom quantum computers; deployed in EU HPC centres,~EUR140M+; co-founded by Nobel laureate Alain Aspect
+Prophesee,France,2014,n/a,https://prophesee.ai,SENSORS - Event-based vision sensors,Neuromorphic event-based vision sensors mimicking the eye,~$128M raised; entered administration in late 2024
+Quobly,France,2022,n/a,https://quobly.io,QUANTUM - Silicon spin-qubit quantum,Silicon spin-qubit quantum processors on standard fabs (formerly Siquance),Wafers in STMicro 300mm fab; CEA/CNRS spin-off
+Scalinx,France,2015,,https://scalinx.com,RF - Wireless,Wideband RFIC frontends,
+Scintil Photonics,France,2018,~30,https://scintil-photonics.com,PHOTONICS - Photonic based startups,Photonic computing platform,~$77M; Nvidia-backed; EUR50M Series B (2025)
+SiPearl,France,2019,~190,https://sipearl.com,HPC - High performance computing,Manycore processors,"~$180M; Rhea1 HPC processor for EuroHPC, made by TSMC"
+Upmem,France,2015,,https://upmem.com,AI - AI hardware,In memory processing devices for big data and AI,
+Viqthor,France,2023,,https://viqthor.com,QUANTUM - Quantum computing,Quantum processing,
+Vsora,France,2015,,https://vsora.com,AI - AI hardware,AI inference chips,
+Welinq,France,2022,,https://welinq.fr,QUANTUM - Quantum computing,Quantum interconnects,
+Akhetonics,Germany,2021,<20 (est.),https://akhetonics.com,PHOTONICS - Photonic based startups,Optical computing devices,~$9M; first all-optical general-purpose processor
+Anabrid,Germany,2023,,https://anabrid.com,ANALOG - All things analog,Analog computer on a chip,
+Black Semiconductor,Germany,2021,~85,https://blacksemiconductor.de,MFG - Manufacturing related,Graphene electronics/photonics translators,EUR254.4M raised (mostly EU/German grant)
+Celtro,Germany,2019,,https://celtro.de,HEALTH - Health centric devices,Energy harvesting implantable medical devices,
+Celus,Germany,2016,,https://celus.io,EDA - Design automation tools,PCB design tools,
+Codasip,Germany,2014,,https://codasip.com,RISC-V - RISC-V based startups,Supplier of RISC-V IP cores,
+Denpaflux,Germany,2022,,https://denpaflux.com,EDA - Design automation tools,EMC analysis platform for design engineering teams,
+FMC (Ferroelectric Memory Company),Germany,2015,n/a,https://ferroelectric-memory.com,MFG - Manufacturing related,Ferroelectric non-volatile RAM,~EUR100M+; DRAM+ memory on hafnium oxide
+Gemesys,Germany,2021,,https://gemesys.tech,AI - AI hardware,Analog AI processors,
+Linque,Germany,2023,,https://linque.eu,PHOTONICS - Photonic based startups,Optical computing,
+Lubis EDA,Germany,2021,,https://Lubis-eda.com,EDA - Design automation tools,Cloud based formal verification platform,
+Q.ANT,Germany,2018,~90,https://qant.com,PHOTONICS - Photonic AI processors,Processors that compute natively in light (thin-film lithium niobate); TRUMPF spin-off,~$80M+; first commercial all-photonic AI co-processors
+Qruise,Germany,2021,,https://qruise.com,QUANTUM - Quantum computing,Design and verification of quantum systems,
+Semify,Germany,2021,,https://semify-eda.com,EDA - Design automation tools,FPGA based platforms,
+Semron,Germany,2020,,https://semron.ai,AI - AI hardware,AI processing,
+Siliconally,Germany,2019,,https://siliconally.com,NETWORKING - Various connectivity pieces,Safe Ethernet IP,
+Simbricks,Germany,2024,,https://simbricks.io,EDA - Design automation tools,Heterogeneous hardware design and verification platform,
+SpiNNcloud,Germany,2021,~50,https://spinncloud.com,AI - AI hardware,Dynamic sparsity based inference engine,SpiNNaker2 neuromorphic supercomputer; TU Dresden
+Ubitium,Germany,2024,,https://ubitium.com,AI - AI hardware,Universal processor,
+Andapt,Ireland,2014,,https://andapt.com,ANALOG - All things analog,Programmable power management ICs,
+Equal1,Ireland,2017,~45,https://equal1.com,QUANTUM - Quantum computing,Silicon spin qubits for scalable quantum computing,~$90M; CMOS silicon spin-qubit quantum SoC
+Cyrillic,Italy,2024,,https://cyrillic.tech,AI - AI hardware,Perception system for physical AI,
+MZ Technologies,Italy,2014,,https://genioevo.com,EDA - Design automation tools,EDA solutions for advanced packaging,
+Axelera,Netherlands,2021,,https://axelera.ai,AI - AI hardware,Low power AI edge processors,
+Innatera,Netherlands,2018,~75,https://innatera.com,AI - AI hardware,Neuromorphic processors,~$27M; first mass-market neuromorphic MCU (Pulsar)
+Qualinx,Netherlands,2015,,https://qualinx.io,RF - Wireless,IoT GNSS based tracking and connectivity,
+Rapid Photonics,Netherlands,2022,,https://rapidphotonics.com,MFG - Manufacturing related,Photonic IC production,
+Spherical,Netherlands,2022,,https://Spherical-systems.com,SPACE - Space technology,Satellite power & control with in-house silicon design,
+Ascenium,Norway,2019,,https://ascenium.com,HPC - High performance computing,General purpose accelerator,
+Nanopower,Norway,2017,,https://nanopowersemi.com,ANALOG - All things analog,Smart power management ICs,
+Novelda,Norway,2004,,https://novelda.com,RF - Wireless,Wireless wideband for high resolution impulse radar,
+OniO,Norway,2019,,https://onio.com,RF - Wireless,Wireless micro controller,
+CircuitLeap.ai,Portugal,2024,,https://circuitleap.ai,EDA - Design automation tools,Automated analog design with GPU and AI,
+Amsimcel,Romania,2018,,https://amsimcel.com,EDA - Design automation tools,GPU powered physical verification,
+Ipronics,Spain,2019,,https://ipronics.com,PHOTONICS - Photonic based startups,Programmable photonics products,
+RaiderChip,Spain,2024,,https://raiderchip.ai,AI - AI hardware,AI hardware,
+Semidynamics,Spain,2016,~120,https://semidynamics.com,RISC-V - RISC-V based startups,High performance RISC-V IP cores,European leader in high-performance RISC-V IP
+Argus Space,Switzerland,2024,,https://argus-space.ch,RF - Wireless,Satcomm telecommunications and radar,
+Chipmind,Switzerland,2024,,https://chipmind.ai,EDA - Design automation tools,Agentic chip design,
+Kandou,Switzerland,2011,n/a,https://kandou.com,NETWORKING - Various connectivity pieces,Chip-to-chip connectivity solutions,~$550M; $225M Series A from SoftBank et al. (2026)
+Lightium,Switzerland,2023,,https://lightium.co,MFG - Manufacturing related,Photonics foundry,
+Mosaic SoC,Switzerland,2024,,https://mosaic-soc.com/,ASIC - Custom silicon,Specialized chips designed for AR glasses,
+Synthara,Switzerland,2020,,https://synthara.ai,AI - AI hardware,In memory computation chips for AI,
+Accelercom,United Kingdom,2016,,https://accelercomm.com,RF - Wireless,5G physical layer for high-performance networks,
+Agile Analog,United Kingdom,2017,,https://agileanalog.com,EDA - Design automation tools,Automating design of analog circuitry,
+Blueshift Memory,United Kingdom,2016,,https://blueshiftmemory.com,MEMORY - Memory,High performance memory centric architecture,
+Chipflow,United Kingdom,2021,,https://chipflow.io,ASIC - Custom silicon,ASIC design platform,
+Circuit Mind,United Kingdom,2018,,https://circuitmind.io,EDA - Design automation tools,PCB design tools,
+Finchetto,United Kingdom,2020,,https://finchetto.com,PHOTONICS - Photonic based startups,Photonic sensors for quantum computing,
+Forefrontrf,United Kingdom,2020,,https://forefrontrf.com,RF - Wireless,Wireless communication devices,
+Fractile,United Kingdom,2022,~30,https://fractile.ai,AI - AI hardware,AI accelerator for LLMs,~GBP15M seed; emerged from stealth 2024
+Heronic,United Kingdom,2024,,https://heronic.ai,EDA - Design automation tools,Automated generation of bespoke AI accelerators,
+HyperCIM,United Kingdom,2023,,https://hypercim.com,AI - AI hardware,Optimized compute in memory architecture,
+Light Trace Photonics,United Kingdom,2021,,https://ltphotonics.co.uk,PHOTONICS - Photonic based startups,Platform for rapid photonic product development,
+Literal Labs,United Kingdom,2023,,https://Literal-labs.ai,AI - AI hardware,Explainable AI using Tsetlin machines,
+Lumai,United Kingdom,2021,,https://luma.ai,PHOTONICS - Photonic based startups,3D optical computing,
+Mintneuro,United Kingdom,2015,,https://mintneuro.com,HEALTH - Health centric devices,Neural implants,
+Olix,United Kingdom,2024,,https://olix.com,AI - AI hardware,Optical tensor processing unit,
+Optalysys,United Kingdom,2013,,https://optalysys.com,PHOTONICS - Photonic based startups,Optical computing next-gen cryptography,
+Oxford Quantum Circuits,United Kingdom,2017,,https://oxfordquantumcircuits.com,QUANTUM - Quantum computing,Quantum computing platform,
+Picocom,United Kingdom,2019,,https://picocom.com,RF - Wireless,Semiconductor products for 5G infrastructure,
+PQShield,United Kingdom,2018,,https://pqshield.com,QUANTUM - Quantum computing,Post-quantum Cryptography Co-processor,
+Pragmatic Semiconductor,United Kingdom,2010,~340,https://pragmaticsemi.com,MFG - Manufacturing related,Manufacturer of low-cost flexible integrated circuits,~$390M; record GBP182M Series D (2023)
+Quantum Motion,United Kingdom,2017,,https://quantummmotion.tech,QUANTUM - Quantum computing,Scalable quantum computer architectural technology,
+RED Semiconductor,United Kingdom,2021,,https://redsemiconductor.com,HPC - High performance computing,Processor technology,
+Riverlane,United Kingdom,2016,,https://riverlane.com,QUANTUM - Quantum computing,Quantum error correction,
+Salience Labs,United Kingdom,2020,,https://saliencelabs.ai,PHOTONICS - Photonic based startups,Photonic computing platform,
+Secqai,United Kingdom,2021,,https://secqai.com,QUANTUM - Quantum computing,Quantum hardware,
+Singular Photonics,United Kingdom,2024,,https://singularphotonics.com,SENSORS - Sensing devices,High performance camera modules,
+Trameto,United Kingdom,2016,,https://trameto.com,ANALOG - All things analog,Energy harvesting PMICs,
+Vaire Computing,United Kingdom,2021,,https://vaire.co,ANALOG - All things analog,Near zero energy computing,
+Vector Photonics,United Kingdom,2020,,https://vectorphotonics.co.uk,PHOTONICS - Photonic based startups,Semiconductor lasers,
+VyperCore,United Kingdom,2022,,https://vypercore.com,RISC-V - RISC-V based startups,RISC-V processors,
+Wave Photonics,United Kingdom,2021,,https://wavephotonics.com,PHOTONICS - Photonic based startups,Photonics design platform,
+Zero Point Motion,United Kingdom,2020,,https://zeropointmotion.com,MEMS - MEMS based technology,Photonics/MEMS motion sensors,
