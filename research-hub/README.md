@@ -116,8 +116,13 @@ docker compose -f docker-compose.test.yml up --build --abort-on-container-exit
 
 ## Adding a dataset
 
-Copy a CSV into `data/` — that's it. The first row must be the header.
-Refresh the hub and it appears on the home page, profiled and rendered.
+**From the UI:** click **Upload CSV** on the home page (or drag a `.csv`
+anywhere onto it). It's saved, profiled, and opened immediately — this works
+the same in Docker, where the file is written to the `hub_data` volume and
+persists.
+
+**From the filesystem:** copy a CSV into `data/`. The first row must be the
+header. Refresh the hub and it appears on the home page.
 
 **Local / bare-metal:** the backend reads `data/` directly, so the file shows
 up on the next refresh.
