@@ -104,8 +104,10 @@ def profile_columns(header: list[str], rows: list[list[str]]) -> list[ColumnProf
             if nums:
                 p.min, p.max = min(nums), max(nums)
 
+        # A column with few distinct values is a facet even if the labels are
+        # long (e.g. a "Category" column). This takes priority over long_text.
         if (
-            p.type == "text"
+            p.type in ("text", "long_text")
             and values
             and p.distinct <= MAX_CATEGORICAL_CARDINALITY
             and p.distinct / len(values) < CATEGORICAL_RATIO
